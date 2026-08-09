@@ -145,13 +145,11 @@
             min-height: 600px;
             display: flex;
             align-items: center;
-            /* Image de fond */
             background-image: url('EcoLight/acceuil.jpg');
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
         }
-        /* Overlay sombre pour la lisibilité du texte */
         .hero::before {
             content: '';
             position: absolute;
@@ -187,6 +185,46 @@
             display: flex;
             flex-wrap: wrap;
             gap: 16px;
+        }
+
+        /* ===== PROVERBES DÉFILANTS ===== */
+        .proverbes {
+            background: #f8fafc;
+            padding: 20px 0;
+            border-top: 2px solid var(--secondary);
+            border-bottom: 2px solid var(--secondary);
+            overflow: hidden;
+            position: relative;
+        }
+        .proverbes-wrapper {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+        .proverbes-track {
+            display: inline-block;
+            animation: defilement 30s linear infinite;
+        }
+        .proverbe-item {
+            display: inline-block;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text);
+            padding: 0 40px;
+            letter-spacing: 0.3px;
+        }
+        .proverbe-item i {
+            color: var(--secondary);
+            margin: 0 6px;
+            font-size: 0.9rem;
+        }
+        @keyframes defilement {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
         }
 
         /* ===== PILIERS ===== */
@@ -502,6 +540,10 @@
             .socials {
                 justify-content: center;
             }
+            .proverbe-item {
+                font-size: 0.95rem;
+                padding: 0 20px;
+            }
         }
         @media (max-width: 700px) {
             nav {
@@ -547,6 +589,10 @@
                 padding: 60px 0 70px;
                 min-height: 480px;
             }
+            .proverbe-item {
+                font-size: 0.85rem;
+                padding: 0 12px;
+            }
         }
     </style>
 </head>
@@ -588,7 +634,33 @@
                     <a href="#piliers" class="btn-outline">En savoir plus</a>
                 </div>
             </div>
-            <!-- Le téléphone a été retiré → l'image de fond fait office de visuel -->
+        </div>
+    </section>
+
+    <!-- ===== PROVERBES DÉFILANTS ===== -->
+    <section class="proverbes">
+        <div class="container">
+            <div class="proverbes-wrapper">
+                <div class="proverbes-track">
+                    <span class="proverbe-item"><i class="fas fa-quote-left"></i> L'éducation est le meilleur héritage qu'on puisse laisser à un enfant. <i class="fas fa-quote-right"></i> — Proverbe mooré</span>
+                    <span class="proverbe-item"><i class="fas fa-quote-left"></i> Instruire un enfant, c'est préparer l'avenir de toute une nation. <i class="fas fa-quote-right"></i> — Thomas Sankara</span>
+                    <span class="proverbe-item"><i class="fas fa-quote-left"></i> La connaissance est une lumière qui éclaire le chemin de la vie. <i class="fas fa-quote-right"></i> — Sagesse burkinabè</span>
+                    <span class="proverbe-item"><i class="fas fa-quote-left"></i> L'école est la mère de la sagesse et le père du progrès. <i class="fas fa-quote-right"></i> — Proverbe local</span>
+                    <span class="proverbe-item"><i class="fas fa-quote-left"></i> Un enfant instruit est un adulte responsable et un citoyen éclairé. <i class="fas fa-quote-right"></i> — Éducation citoyenne</span>
+                    <span class="proverbe-item"><i class="fas fa-quote-left"></i> L'éducation est le socle sur lequel se bâtit le développement durable. <i class="fas fa-quote-right"></i> — Conseil national de l'éducation</span>
+                    <span class="proverbe-item"><i class="fas fa-quote-left"></i> Celui qui sait lire et écrire a déjà un pied dans l'avenir. <i class="fas fa-quote-right"></i> — Proverbe mossi</span>
+                    <span class="proverbe-item"><i class="fas fa-quote-left"></i> Former un esprit, c'est cultiver un champ qui ne s'épuise jamais. <i class="fas fa-quote-right"></i> — Sagesse africaine</span>
+                    <!-- Duplication pour continuité -->
+                    <span class="proverbe-item"><i class="fas fa-quote-left"></i> L'éducation est le meilleur héritage qu'on puisse laisser à un enfant. <i class="fas fa-quote-right"></i> — Proverbe mooré</span>
+                    <span class="proverbe-item"><i class="fas fa-quote-left"></i> Instruire un enfant, c'est préparer l'avenir de toute une nation. <i class="fas fa-quote-right"></i> — Thomas Sankara</span>
+                    <span class="proverbe-item"><i class="fas fa-quote-left"></i> La connaissance est une lumière qui éclaire le chemin de la vie. <i class="fas fa-quote-right"></i> — Sagesse burkinabè</span>
+                    <span class="proverbe-item"><i class="fas fa-quote-left"></i> L'école est la mère de la sagesse et le père du progrès. <i class="fas fa-quote-right"></i> — Proverbe local</span>
+                    <span class="proverbe-item"><i class="fas fa-quote-left"></i> Un enfant instruit est un adulte responsable et un citoyen éclairé. <i class="fas fa-quote-right"></i> — Éducation citoyenne</span>
+                    <span class="proverbe-item"><i class="fas fa-quote-left"></i> L'éducation est le socle sur lequel se bâtit le développement durable. <i class="fas fa-quote-right"></i> — Conseil national de l'éducation</span>
+                    <span class="proverbe-item"><i class="fas fa-quote-left"></i> Celui qui sait lire et écrire a déjà un pied dans l'avenir. <i class="fas fa-quote-right"></i> — Proverbe mossi</span>
+                    <span class="proverbe-item"><i class="fas fa-quote-left"></i> Former un esprit, c'est cultiver un champ qui ne s'épuise jamais. <i class="fas fa-quote-right"></i> — Sagesse africaine</span>
+                </div>
+            </div>
         </div>
     </section>
 
