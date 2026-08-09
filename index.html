@@ -111,6 +111,13 @@
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
         }
+        /* Ajout du style pour le nom EcoLight à côté du logo */
+        .logo span {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text);
+            letter-spacing: -0.5px;
+        }
         nav {
             display: flex;
             align-items: center;
@@ -203,7 +210,7 @@
         }
         .proverbes-track {
             display: inline-block;
-            animation: defilement 30s linear infinite;
+            animation: defilement 45s linear infinite; /* Ralenti à 45s */
         }
         .proverbe-item {
             display: inline-block;
@@ -581,6 +588,9 @@
                 height: 32px;
                 border-radius: 8px;
             }
+            .logo span {
+                font-size: 1.2rem;
+            }
             footer .logo img {
                 height: 36px;
                 border-radius: 8px;
@@ -603,6 +613,7 @@
         <div class="container">
             <a href="#" class="logo">
                 <img src="EcoLight/logo.png" alt="EcoLight" />
+                <span>EcoLight</span> <!-- Nom ajouté ici -->
             </a>
             <button class="menu-toggle" id="menuToggle" aria-label="Menu">
                 <i class="fas fa-bars"></i>
@@ -800,6 +811,7 @@
             <div>
                 <a href="#" class="logo">
                     <img src="EcoLight/logo.png" alt="EcoLight" />
+                    <span>EcoLight</span> <!-- Nom aussi dans le footer pour cohérence -->
                 </a>
                 <p style="margin-top:12px;color:#94a3b8;max-width:320px;">
                     Solution de digitalisation du suivi scolaire au Burkina Faso.
