@@ -19,12 +19,12 @@
             box-sizing: border-box;
         }
         :root {
-            --brand: #00A3E0;      /* Primary from Flutter */
-            --secondary: #76BC43;  /* Secondary from Flutter */
+            --brand: #00A3E0;
+            --secondary: #76BC43;
             --accent: #f5a623;
-            --light: #F8FAFC;      /* Background from Flutter */
+            --light: #F8FAFC;
             --gray: #eef2f6;
-            --text: #1E293B;       /* TextDark from Flutter */
+            --text: #1E293B;
             --text-light: #64748B;
             --shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
             --radius: 16px;
@@ -68,18 +68,18 @@
         .btn-outline {
             display: inline-block;
             background: transparent;
-            color: var(--secondary);
+            color: #fff;
             font-weight: 600;
             padding: 14px 32px;
             border-radius: 40px;
-            border: 2px solid var(--secondary);
+            border: 2px solid #fff;
             transition: all 0.3s ease;
             cursor: pointer;
             font-size: 1rem;
         }
         .btn-outline:hover {
-            background: var(--secondary);
-            color: #fff;
+            background: #fff;
+            color: var(--brand);
         }
 
         /* ===== HEADER ===== */
@@ -104,13 +104,12 @@
             font-weight: 800;
             color: var(--text);
         }
-        /* --- LOGO IMAGE --- */
         .logo img {
             height: 40px;
             width: auto;
             display: block;
-            border-radius: 12px;       /* ✅ coins arrondis */
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
         }
         nav {
             display: flex;
@@ -123,7 +122,7 @@
             transition: color 0.2s;
         }
         nav a:hover {
-            color: var(--secondary);   /* ✅ survol en secondaire */
+            color: var(--secondary);
         }
         nav .btn-primary {
             padding: 10px 24px;
@@ -140,12 +139,29 @@
 
         /* ===== HERO ===== */
         .hero {
-            padding: 60px 0 80px;
-            background: linear-gradient(165deg, #F8FAFC 0%, #E0F7FF 100%);
+            padding: 80px 0 100px;
             position: relative;
             overflow: hidden;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            /* Image de fond */
+            background-image: url('EcoLight/acceuil.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+        /* Overlay sombre pour la lisibilité du texte */
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 1;
         }
         .hero .container {
+            position: relative;
+            z-index: 2;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 60px;
@@ -155,7 +171,7 @@
             font-size: 3.2rem;
             font-weight: 800;
             line-height: 1.15;
-            color: var(--text);
+            color: #fff;
             margin-bottom: 20px;
         }
         .hero-content h1 i {
@@ -163,7 +179,7 @@
         }
         .hero-content p {
             font-size: 1.2rem;
-            color: var(--text-light);
+            color: rgba(255, 255, 255, 0.85);
             margin-bottom: 32px;
             max-width: 520px;
         }
@@ -171,59 +187,6 @@
             display: flex;
             flex-wrap: wrap;
             gap: 16px;
-        }
-        .hero-image {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .hero-image .mockup {
-            background: var(--text);
-            border-radius: 40px;
-            padding: 20px 12px 12px;
-            box-shadow: 0 40px 80px rgba(15, 43, 61, 0.25);
-            width: 280px;
-            border: 4px solid #fff;
-        }
-        .hero-image .mockup .screen {
-            background: #1e2f3f;
-            border-radius: 24px;
-            padding: 30px 16px;
-            color: #fff;
-            text-align: center;
-            min-height: 380px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        .hero-image .mockup .screen i {
-            font-size: 4rem;
-            color: var(--brand);
-            margin-bottom: 16px;
-        }
-        .hero-image .mockup .screen h3 {
-            font-weight: 600;
-            font-size: 1.2rem;
-            color: #fff;
-        }
-        .hero-image .mockup .screen p {
-            font-size: 0.85rem;
-            color: #94a3b8;
-            margin-top: 6px;
-        }
-        .hero-image .mockup .screen .badge-group-mock {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            font-size: 0.8rem;
-            color: #94a3b8;
-        }
-        .hero-image .mockup .screen .badge-group-mock span i {
-            font-size: 0.9rem;
-            color: var(--secondary);
-            margin: 0;
         }
 
         /* ===== PILIERS ===== */
@@ -258,12 +221,12 @@
         }
         .card:hover {
             transform: translateY(-6px);
-            border-color: var(--secondary);  /* ✅ bordure secondaire */
+            border-color: var(--secondary);
             box-shadow: var(--shadow);
         }
         .card i {
             font-size: 2.6rem;
-            color: var(--secondary);         /* ✅ icônes en secondaire */
+            color: var(--secondary);
             margin-bottom: 16px;
         }
         .card h3 {
@@ -323,7 +286,7 @@
         }
         .feature-item i {
             font-size: 2.8rem;
-            color: var(--secondary);    /* ✅ icônes en secondaire */
+            color: var(--secondary);
             margin-bottom: 12px;
         }
         .feature-item h4 {
@@ -368,7 +331,7 @@
         }
         .faq-question i {
             transition: 0.3s;
-            color: var(--secondary);   /* ✅ flèche en secondaire */
+            color: var(--secondary);
         }
         .faq-item.active .faq-question i {
             transform: rotate(180deg);
@@ -429,20 +392,19 @@
             grid-template-columns: 2fr 1fr 1fr;
             gap: 40px;
         }
-        /* --- FOOTER LOGO IMAGE --- */
         footer .logo img {
             height: 45px;
             width: auto;
             display: block;
-            border-radius: 12px;       /* ✅ coins arrondis */
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
         footer a {
             color: #94a3b8;
             transition: 0.2s;
         }
         footer a:hover {
-            color: var(--secondary);   /* ✅ survol en secondaire */
+            color: var(--secondary);
         }
         footer .socials {
             display: flex;
@@ -470,7 +432,7 @@
         }
         .footer-contact li i {
             width: 20px;
-            color: var(--secondary);   /* ✅ icônes en secondaire */
+            color: var(--secondary);
         }
 
         /* ===== WHATSAPP FLOATING ===== */
@@ -526,8 +488,8 @@
             .hero-buttons {
                 justify-content: center;
             }
-            .hero-image .mockup {
-                width: 220px;
+            .hero-content h1 {
+                font-size: 2.6rem;
             }
             footer .container {
                 grid-template-columns: 1fr;
@@ -581,6 +543,10 @@
                 height: 36px;
                 border-radius: 8px;
             }
+            .hero {
+                padding: 60px 0 70px;
+                min-height: 480px;
+            }
         }
     </style>
 </head>
@@ -622,20 +588,7 @@
                     <a href="#piliers" class="btn-outline">En savoir plus</a>
                 </div>
             </div>
-            <div class="hero-image">
-                <div class="mockup">
-                    <div class="screen">
-                        <i class="fas fa-mobile-alt"></i>
-                        <h3>EcoLight</h3>
-                        <p>Suivi scolaire en temps réel</p>
-                        <div class="badge-group-mock">
-                            <span><i class="fas fa-check-circle"></i> Notes</span>
-                            <span><i class="fas fa-check-circle"></i> Présences</span>
-                            <span><i class="fas fa-check-circle"></i> Paiements</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- Le téléphone a été retiré → l'image de fond fait office de visuel -->
         </div>
     </section>
 
@@ -819,7 +772,6 @@
         toggle.addEventListener('click', () => {
             nav.classList.toggle('open');
         });
-        // Fermer le menu au clic sur un lien
         document.querySelectorAll('#mainNav a').forEach(link => {
             link.addEventListener('click', () => nav.classList.remove('open'));
         });
@@ -829,7 +781,6 @@
             btn.addEventListener('click', function() {
                 const parent = this.closest('.faq-item');
                 const wasActive = parent.classList.contains('active');
-                // Ferme tous les autres
                 document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('active'));
                 if (!wasActive) {
                     parent.classList.add('active');
@@ -837,7 +788,7 @@
             });
         });
 
-        // --- Smooth scroll pour les liens internes ---
+        // --- Smooth scroll ---
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
