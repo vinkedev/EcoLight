@@ -154,7 +154,7 @@
             padding: 4px 8px;
         }
 
-        /* ===== HERO ===== */
+        /* ===== HERO DIAPORAMA ===== */
         .hero {
             position: relative;
             overflow: hidden;
@@ -162,17 +162,36 @@
             display: flex;
             align-items: center;
             padding: 50px 0 70px;
-            background-image: url('EcoLight/acceuil.jpg');
+        }
+
+        /* Conteneur des slides en fond */
+        .hero-slides-wrapper {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+        .hero-slide {
+            position: absolute;
+            inset: 0;
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 1.2s ease;
+            will-change: opacity;
         }
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        /* Overlay sombre (pour la lisibilité du texte) */
         .hero-overlay {
             position: absolute;
             inset: 0;
             background: rgba(0, 0, 0, 0.65);
             z-index: 1;
         }
+
         .hero .container {
             position: relative;
             z-index: 2;
@@ -225,77 +244,8 @@
             }
         }
 
-        /* ===== SLIDER PLEIN ÉCRAN (BACKGROUND) ===== */
-        .slider-section {
-            position: relative;
-            height: 85vh;
-            min-height: 500px;
-            background: #1a1a1a;
-            overflow: hidden;
-        }
-        .slider-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-        .slider-track {
-            display: flex;
-            height: 100%;
-            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        .slide {
-            min-width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            flex-shrink: 0;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        /* Overlay sombre pour lisibilité du texte (comme la hero) */
-        .slide::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.55);
-            z-index: 1;
-        }
-        .slide-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            color: #fff;
-            max-width: 800px;
-            padding: 20px;
-        }
-        .slide-content h2 {
-            font-size: 2.8rem;
-            font-weight: 800;
-            margin-bottom: 12px;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeUp 0.8s ease forwards 0.3s;
-        }
-        .slide-content p {
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.85);
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeUp 0.8s ease forwards 0.5s;
-        }
-        .slide-content .btn-primary {
-            margin-top: 20px;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeUp 0.8s ease forwards 0.7s;
-        }
-
-        /* Boutons de navigation */
-        .slider-btn {
+        /* Flèches de navigation du diaporama */
+        .hero-slider-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
@@ -314,19 +264,19 @@
             align-items: center;
             justify-content: center;
         }
-        .slider-btn:hover {
+        .hero-slider-btn:hover {
             background: rgba(255, 255, 255, 0.4);
             transform: translateY(-50%) scale(1.05);
         }
-        .slider-btn.prev {
+        .hero-slider-btn.prev {
             left: 24px;
         }
-        .slider-btn.next {
+        .hero-slider-btn.next {
             right: 24px;
         }
 
         /* Points indicateurs */
-        .slider-dots {
+        .hero-dots {
             position: absolute;
             bottom: 30px;
             left: 0;
@@ -334,7 +284,7 @@
             text-align: center;
             z-index: 10;
         }
-        .slider-dots span {
+        .hero-dots span {
             display: inline-block;
             width: 14px;
             height: 14px;
@@ -345,12 +295,12 @@
             transition: all 0.3s;
             border: 2px solid transparent;
         }
-        .slider-dots span.active {
+        .hero-dots span.active {
             background: var(--brand);
             border-color: #fff;
             transform: scale(1.2);
         }
-        .slider-dots span:hover {
+        .hero-dots span:hover {
             background: var(--brand);
         }
 
@@ -884,7 +834,7 @@
             .grid-4, .grid-4-features {
                 grid-template-columns: repeat(2, 1fr);
             }
-            .hero-content h1, .slide-content h2 {
+            .hero-content h1 {
                 font-size: 2.4rem;
             }
         }
@@ -925,22 +875,16 @@
                 font-size: 1rem;
                 max-width: 100%;
             }
-            .slider-btn {
+            .hero-slider-btn {
                 width: 40px;
                 height: 40px;
                 font-size: 1rem;
             }
-            .slider-btn.prev {
+            .hero-slider-btn.prev {
                 left: 12px;
             }
-            .slider-btn.next {
+            .hero-slider-btn.next {
                 right: 12px;
-            }
-            .slide-content h2 {
-                font-size: 2rem;
-            }
-            .slide-content p {
-                font-size: 1rem;
             }
         }
 
@@ -979,28 +923,24 @@
             .solution-box, .portail-box {
                 padding: 24px;
             }
-            .hero-content h1, .slide-content h2 {
+            .hero-content h1 {
                 font-size: 1.8rem;
             }
             .portail-box img {
                 max-width: 180px;
             }
-            .slider-section {
-                height: 70vh;
-                min-height: 350px;
-            }
-            .slider-btn {
+            .hero-slider-btn {
                 width: 34px;
                 height: 34px;
                 font-size: 0.8rem;
             }
-            .slider-btn.prev {
+            .hero-slider-btn.prev {
                 left: 8px;
             }
-            .slider-btn.next {
+            .hero-slider-btn.next {
                 right: 8px;
             }
-            .slider-dots span {
+            .hero-dots span {
                 width: 10px;
                 height: 10px;
                 margin: 0 4px;
@@ -1033,9 +973,19 @@
         </div>
     </header>
 
-    <!-- ===== HERO ===== -->
+    <!-- ===== HERO EN DIAPORAMA ===== -->
     <section class="hero" id="hero">
+        <!-- Slides en fond -->
+        <div class="hero-slides-wrapper" id="heroSlidesWrapper">
+            <div class="hero-slide active" style="background-image: url('EcoLight/acceuil.jpg');"></div>
+            <div class="hero-slide" style="background-image: url('EcoLight/onboarding_communication.png');"></div>
+            <div class="hero-slide" style="background-image: url('EcoLight/onboarding_academic.jpg');"></div>
+        </div>
+
+        <!-- Overlay sombre -->
         <div class="hero-overlay"></div>
+
+        <!-- Contenu texte -->
         <div class="container">
             <div class="hero-content">
                 <h1>L'école et les parents, <br /><i>enfin connectés.</i></h1>
@@ -1052,41 +1002,17 @@
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- ===== SLIDER PLEIN ÉCRAN (BACKGROUND) ===== -->
-    <section class="slider-section" id="slider">
-        <div class="slider-wrapper">
-            <div class="slider-track">
-                <!-- Slide 1 : Communication -->
-                <div class="slide" style="background-image: url('EcoLight/onboarding_communication.png');">
-                    <div class="slide-content">
-                        <h2>Communication & Suivi</h2>
-                        <p>Restez informé en temps réel des notes, absences et événements.</p>
-                        <a href="#solution" class="btn-primary">Découvrir</a>
-                    </div>
-                </div>
-                <!-- Slide 2 : Académique -->
-                <div class="slide" style="background-image: url('EcoLight/onboarding_academic.jpg');">
-                    <div class="slide-content">
-                        <h2>Gestion Académique</h2>
-                        <p>Simplifiez la saisie des notes et la gestion des bulletins.</p>
-                        <a href="#piliers" class="btn-primary">Voir les portails</a>
-                    </div>
-                </div>
-            </div>
+        <!-- Flèches de navigation -->
+        <button class="hero-slider-btn prev" id="heroPrev" aria-label="Précédent">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="hero-slider-btn next" id="heroNext" aria-label="Suivant">
+            <i class="fas fa-chevron-right"></i>
+        </button>
 
-            <!-- Boutons de navigation -->
-            <button class="slider-btn prev" aria-label="Précédent">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="slider-btn next" aria-label="Suivant">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-
-            <!-- Indicateurs (dots) -->
-            <div class="slider-dots"></div>
-        </div>
+        <!-- Points indicateurs -->
+        <div class="hero-dots" id="heroDots"></div>
     </section>
 
     <!-- ===== PROVERBES DÉFILANTS ===== -->
@@ -1428,7 +1354,7 @@
 
         fadeElements.forEach(el => observer.observe(el));
 
-        // ===== (Optionnel) Smooth scroll pour les ancres =====
+        // ===== Smooth scroll pour les ancres =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const targetId = this.getAttribute('href');
@@ -1441,17 +1367,16 @@
             });
         });
 
-        // ===== SLIDER LOGIC (3 secondes) =====
-        const track = document.querySelector('.slider-track');
-        const slides = document.querySelectorAll('.slide');
-        const dotsContainer = document.querySelector('.slider-dots');
-        const prevBtn = document.querySelector('.slider-btn.prev');
-        const nextBtn = document.querySelector('.slider-btn.next');
+        // ===== DIAPORAMA DE LA HERO =====
+        const slides = document.querySelectorAll('.hero-slide');
+        const dotsContainer = document.getElementById('heroDots');
+        const prevBtn = document.getElementById('heroPrev');
+        const nextBtn = document.getElementById('heroNext');
         let currentIndex = 0;
         let interval;
 
         if (slides.length > 0) {
-            // Création des indicateurs (dots)
+            // Création des points
             slides.forEach((_, i) => {
                 const dot = document.createElement('span');
                 if (i === 0) dot.classList.add('active');
@@ -1465,8 +1390,10 @@
 
             function goToSlide(index) {
                 currentIndex = (index + slides.length) % slides.length;
-                track.style.transform = `translateX(-${currentIndex * 100}%)`;
-                document.querySelectorAll('.slider-dots span').forEach((dot, i) => {
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === currentIndex);
+                });
+                document.querySelectorAll('.hero-dots span').forEach((dot, i) => {
                     dot.classList.toggle('active', i === currentIndex);
                 });
             }
