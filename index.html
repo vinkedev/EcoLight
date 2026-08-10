@@ -164,7 +164,6 @@
             padding: 50px 0 70px;
         }
 
-        /* Conteneur des slides en fond */
         .hero-slides-wrapper {
             position: absolute;
             inset: 0;
@@ -184,7 +183,6 @@
             opacity: 1;
         }
 
-        /* Overlay sombre */
         .hero-overlay {
             position: absolute;
             inset: 0;
@@ -244,7 +242,6 @@
             }
         }
 
-        /* Flèches de navigation du diaporama */
         .hero-slider-btn {
             position: absolute;
             top: 50%;
@@ -275,7 +272,6 @@
             right: 24px;
         }
 
-        /* Points indicateurs */
         .hero-dots {
             position: absolute;
             bottom: 30px;
@@ -302,72 +298,6 @@
         }
         .hero-dots span:hover {
             background: var(--brand);
-        }
-
-        /* ===== NOUVELLE SECTION PORTAILS (4 CARTES) ===== */
-        .portails-presentation {
-            padding: 70px 0;
-            background: #fff;
-        }
-        .grid-4-portails {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-        }
-        .card-portail {
-            background: var(--light);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: all var(--transition);
-            border: 1px solid var(--gray);
-            display: flex;
-            flex-direction: column;
-        }
-        .card-portail:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
-        }
-        .card-portail img {
-            width: 100%;
-            height: 200px;
-            /* HARMONISATION : on utilise contain + fond gris pour que chaque image garde ses proportions */
-            object-fit: contain;
-            background: var(--gray);
-            padding: 8px; /* petit espace pour que l'image "respire" dans le cadre */
-            border-bottom: 1px solid var(--gray);
-        }
-        .card-portail h3 {
-            padding: 20px 24px 10px;
-            font-size: 1.3rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--text);
-        }
-        .card-portail h3 i {
-            color: var(--secondary);
-            font-size: 1.4rem;
-        }
-        .card-portail ul {
-            padding: 0 24px 24px;
-            list-style: none;
-            flex: 1;
-        }
-        .card-portail ul li {
-            padding: 6px 0;
-            font-size: 0.9rem;
-            color: var(--text-light);
-            display: flex;
-            gap: 10px;
-            align-items: flex-start;
-            line-height: 1.5;
-        }
-        .card-portail ul li i {
-            color: var(--brand);
-            margin-top: 4px;
-            min-width: 18px;
-            font-size: 0.8rem;
         }
 
         /* ===== PROVERBES ===== */
@@ -422,7 +352,7 @@
             margin-bottom: 40px;
         }
 
-        /* ===== FADE-UP ANIMATION (Intersection Observer) ===== */
+        /* ===== FADE-UP ANIMATION ===== */
         .fade-up {
             opacity: 0;
             transform: translateY(40px);
@@ -431,6 +361,90 @@
         .fade-up.visible {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        /* ===== PORTAILS DÉTAILLÉS (EN LIGNE) ===== */
+        .portails-details {
+            padding: 70px 0;
+            background: #fff;
+        }
+
+        .portail-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 48px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+        }
+        .portail-row:last-child {
+            margin-bottom: 0;
+        }
+        .portail-row:hover {
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .portail-row .text h3 {
+            font-size: 1.8rem;
+            color: var(--brand);
+            margin-bottom: 12px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .portail-row .text h3 i {
+            color: var(--secondary);
+            font-size: 1.6rem;
+        }
+        .portail-row .text p {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 16px;
+            line-height: 1.7;
+        }
+        .portail-row .text ul {
+            list-style: none;
+        }
+        .portail-row .text ul li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+        .portail-row .text ul li i {
+            color: var(--secondary);
+            margin-top: 4px;
+        }
+
+        .portail-row img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform var(--transition), box-shadow var(--transition);
+            padding: 8px;
+            border: 1px solid var(--gray);
+        }
+        .portail-row img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Alternance : une fois image à droite, une fois à gauche */
+        .portail-row:nth-child(even) .text {
+            order: 2;
+        }
+        .portail-row:nth-child(even) img {
+            order: 1;
         }
 
         /* ===== POURQUOI ===== */
@@ -664,9 +678,6 @@
         /* ============================================================ */
         /* ===== RESPONSIVE ===== */
         @media (max-width: 1024px) {
-            .grid-4-portails {
-                grid-template-columns: repeat(2, 1fr);
-            }
             .grid-4-features {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -716,6 +727,31 @@
             .hero-slider-btn.next {
                 right: 12px;
             }
+
+            /* Portails en ligne : passage en 1 colonne */
+            .portail-row {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 32px 24px;
+            }
+            .portail-row .text h3 {
+                justify-content: center;
+            }
+            .portail-row .text ul li {
+                justify-content: center;
+            }
+            .portail-row:nth-child(even) .text {
+                order: 0;
+            }
+            .portail-row:nth-child(even) img {
+                order: 0;
+            }
+            .portail-row img {
+                max-height: 220px;
+            }
+            .portail-row .text h3 {
+                font-size: 1.5rem;
+            }
         }
 
         @media (max-width: 600px) {
@@ -738,7 +774,7 @@
             nav.open {
                 display: flex;
             }
-            .grid-4-portails, .grid-4-features {
+            .grid-4-features {
                 grid-template-columns: 1fr;
             }
             .btn-primary {
@@ -769,8 +805,13 @@
                 height: 10px;
                 margin: 0 4px;
             }
-            .card-portail img {
-                height: 150px;
+
+            /* Titres plus petits sur mobile */
+            .portail-row .text h3 {
+                font-size: 1.2rem;
+            }
+            .portail-row .text h3 i {
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -798,19 +839,14 @@
         </div>
     </header>
 
-    <!-- ===== HERO EN DIAPORAMA ===== -->
+    <!-- ===== HERO DIAPORAMA ===== -->
     <section class="hero" id="hero">
-        <!-- Slides en fond -->
         <div class="hero-slides-wrapper" id="heroSlidesWrapper">
             <div class="hero-slide active" style="background-image: url('EcoLight/acceuil.jpg');"></div>
             <div class="hero-slide" style="background-image: url('EcoLight/onboarding_communication.png');"></div>
             <div class="hero-slide" style="background-image: url('EcoLight/onboarding_academic.jpg');"></div>
         </div>
-
-        <!-- Overlay sombre -->
         <div class="hero-overlay"></div>
-
-        <!-- Contenu texte -->
         <div class="container">
             <div class="hero-content">
                 <h1>L'école et les parents, <br /><i>enfin connectés.</i></h1>
@@ -827,76 +863,16 @@
                 </div>
             </div>
         </div>
-
-        <!-- Flèches de navigation -->
         <button class="hero-slider-btn prev" id="heroPrev" aria-label="Précédent">
             <i class="fas fa-chevron-left"></i>
         </button>
         <button class="hero-slider-btn next" id="heroNext" aria-label="Suivant">
             <i class="fas fa-chevron-right"></i>
         </button>
-
-        <!-- Points indicateurs -->
         <div class="hero-dots" id="heroDots"></div>
     </section>
 
-    <!-- ===== NOUVELLE SECTION : PORTAILS (PARENTS, ENSEIGNANT, ADMIN, DIRECTION) ===== -->
-    <section class="portails-presentation" id="portails">
-        <div class="container">
-            <h2 class="section-title fade-up">Des portails dédiés pour chaque acteur</h2>
-            <p class="section-sub fade-up">Une expérience sur-mesure pour les parents, les enseignants, l'administration et la direction.</p>
-
-            <div class="grid-4-portails">
-                <!-- 1. Portail Parents -->
-                <div class="card-portail fade-up">
-                    <img src="EcoLight/parentscreen.png" alt="Portail Parents" />
-                    <h3><i class="fas fa-users"></i> Parents</h3>
-                    <ul>
-                        <li><i class="fas fa-check-circle"></i> Consultation des notes, absences et retards</li>
-                        <li><i class="fas fa-check-circle"></i> Réception des annonces et événements</li>
-                        <li><i class="fas fa-check-circle"></i> Suivi des paiements et échéances</li>
-                        <li><i class="fas fa-check-circle"></i> Interface simple et intuitive</li>
-                    </ul>
-                </div>
-
-                <!-- 2. Portail Enseignant -->
-                <div class="card-portail fade-up">
-                    <img src="EcoLight/profscreen.png" alt="Portail Enseignant" />
-                    <h3><i class="fas fa-chalkboard-user"></i> Enseignants</h3>
-                    <ul>
-                        <li><i class="fas fa-check-circle"></i> <strong>Consultez du planning :</strong> Emploi du temps mis à jour en temps réel.</li>
-                        <li><i class="fas fa-check-circle"></i> <strong>Saisie fluide des notes & appréciations :</strong> Interface de saisie rapide élève par élève avec tags d'appréciations instantanés (Assez bien, Excellent...) et calcul automatique des moyennes.</li>
-                        <li><i class="fas fa-check-circle"></i> <strong>Gestion des absences en 1 clic :</strong> Option rapide ("Marquer absent") lors des contrôles ou appels en classe.</li>
-                        <li><i class="fas fa-check-circle"></i> <strong>Mode hors-ligne :</strong> Saisie des données sur smartphone/ordinateur même sans connexion internet, avec synchronisation automatique au réseau.</li>
-                    </ul>
-                </div>
-
-                <!-- 3. Portail Administration -->
-                <div class="card-portail fade-up">
-                    <img src="EcoLight/adminscreen.png" alt="Portail Administration" />
-                    <h3><i class="fas fa-building"></i> Administration</h3>
-                    <ul>
-                        <li><i class="fas fa-check-circle"></i> <strong>Notes & absences centralisées</strong></li>
-                        <li><i class="fas fa-check-circle"></i> <strong>Annonces aux parents</strong></li>
-                        <li><i class="fas fa-check-circle"></i> <strong>Suivi comportemental & classes</strong></li>
-                    </ul>
-                </div>
-
-                <!-- 4. Portail Direction -->
-                <div class="card-portail fade-up">
-                    <img src="EcoLight/directionscreen.png" alt="Portail Direction" />
-                    <h3><i class="fas fa-flag"></i> Direction</h3>
-                    <ul>
-                        <li><i class="fas fa-check-circle"></i> <strong>Annonces ciblées aux parents</strong></li>
-                        <li><i class="fas fa-check-circle"></i> <strong>Tableaux de bord stratégiques</strong></li>
-                        <li><i class="fas fa-check-circle"></i> <strong>Suivi comportemental des élèves</strong></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== PROVERBES DÉFILANTS ===== -->
+    <!-- ===== PROVERBES (CITATIONS) ===== -->
     <section class="proverbes">
         <div class="container">
             <div class="proverbes-wrapper">
@@ -907,6 +883,68 @@
                     <span class="proverbe-item"><i class="fas fa-quote-left"></i> L'éducation est une arme puissante pour la libération et la transformation sociale. <i class="fas fa-quote-right"></i> — Thomas Sankara</span>
                     <span class="proverbe-item"><i class="fas fa-quote-left"></i> L'éducation est l'arme la plus puissante que l'on puisse utiliser pour changer le monde. <i class="fas fa-quote-right"></i> — Nelson Mandela</span>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== NOUVELLE SECTION : PORTAILS DÉTAILLÉS (EN LIGNE) ===== -->
+    <section class="portails-details" id="portails">
+        <div class="container">
+            <h2 class="section-title fade-up">Des portails dédiés pour chaque acteur</h2>
+            <p class="section-sub fade-up">Une expérience sur-mesure pour les parents, les enseignants, l'administration et la direction.</p>
+
+            <!-- 1. Parents -->
+            <div class="portail-row fade-up">
+                <div class="text">
+                    <h3><i class="fas fa-users"></i> Parents</h3>
+                    <ul>
+                        <li><i class="fas fa-circle-check"></i> Consultation des notes, absences et retards</li>
+                        <li><i class="fas fa-circle-check"></i> Réception des annonces et événements</li>
+                        <li><i class="fas fa-circle-check"></i> Suivi des paiements et échéances</li>
+                        <li><i class="fas fa-circle-check"></i> Interface simple et intuitive</li>
+                    </ul>
+                </div>
+                <img src="EcoLight/parentscreen.png" alt="Portail Parents" />
+            </div>
+
+            <!-- 2. Enseignants -->
+            <div class="portail-row fade-up">
+                <div class="text">
+                    <h3><i class="fas fa-chalkboard-user"></i> Enseignants</h3>
+                    <ul>
+                        <li><i class="fas fa-circle-check"></i> <strong>Consultez du planning :</strong> Emploi du temps mis à jour en temps réel.</li>
+                        <li><i class="fas fa-circle-check"></i> <strong>Saisie fluide des notes & appréciations :</strong> Interface de saisie rapide élève par élève avec tags d'appréciations instantanés (Assez bien, Excellent...) et calcul automatique des moyennes.</li>
+                        <li><i class="fas fa-circle-check"></i> <strong>Gestion des absences en 1 clic :</strong> Option rapide ("Marquer absent") lors des contrôles ou appels en classe.</li>
+                        <li><i class="fas fa-circle-check"></i> <strong>Mode hors-ligne :</strong> Saisie des données sur smartphone/ordinateur même sans connexion internet, avec synchronisation automatique au réseau.</li>
+                    </ul>
+                </div>
+                <img src="EcoLight/profscreen.png" alt="Portail Enseignants" />
+            </div>
+
+            <!-- 3. Administration -->
+            <div class="portail-row fade-up">
+                <div class="text">
+                    <h3><i class="fas fa-building"></i> Administration</h3>
+                    <ul>
+                        <li><i class="fas fa-circle-check"></i> <strong>Notes & absences centralisées</strong></li>
+                        <li><i class="fas fa-circle-check"></i> <strong>Annonces aux parents</strong></li>
+                        <li><i class="fas fa-circle-check"></i> <strong>Suivi comportemental & classes</strong></li>
+                    </ul>
+                </div>
+                <img src="EcoLight/adminscreen.png" alt="Portail Administration" />
+            </div>
+
+            <!-- 4. Direction -->
+            <div class="portail-row fade-up">
+                <div class="text">
+                    <h3><i class="fas fa-flag"></i> Direction</h3>
+                    <ul>
+                        <li><i class="fas fa-circle-check"></i> <strong>Annonces ciblées aux parents</strong></li>
+                        <li><i class="fas fa-circle-check"></i> <strong>Tableaux de bord stratégiques</strong></li>
+                        <li><i class="fas fa-circle-check"></i> <strong>Suivi comportemental des élèves</strong></li>
+                    </ul>
+                </div>
+                <img src="EcoLight/directionscreen.png" alt="Portail Direction" />
             </div>
         </div>
     </section>
@@ -1048,9 +1086,8 @@
             });
         });
 
-        // ===== Fade-up on scroll (Intersection Observer) =====
+        // ===== Fade-up on scroll =====
         const fadeElements = document.querySelectorAll('.fade-up');
-
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1062,10 +1099,9 @@
             threshold: 0.15,
             rootMargin: '0px 0px -30px 0px'
         });
-
         fadeElements.forEach(el => observer.observe(el));
 
-        // ===== Smooth scroll pour les ancres =====
+        // ===== Smooth scroll =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const targetId = this.getAttribute('href');
@@ -1078,7 +1114,7 @@
             });
         });
 
-        // ===== DIAPORAMA DE LA HERO =====
+        // ===== DIAPORAMA =====
         const slides = document.querySelectorAll('.hero-slide');
         const dotsContainer = document.getElementById('heroDots');
         const prevBtn = document.getElementById('heroPrev');
@@ -1087,7 +1123,6 @@
         let interval;
 
         if (slides.length > 0) {
-            // Création des points
             slides.forEach((_, i) => {
                 const dot = document.createElement('span');
                 if (i === 0) dot.classList.add('active');
@@ -1109,20 +1144,14 @@
                 });
             }
 
-            function nextSlide() {
-                goToSlide(currentIndex + 1);
-            }
-
-            function prevSlide() {
-                goToSlide(currentIndex - 1);
-            }
+            function nextSlide() { goToSlide(currentIndex + 1); }
+            function prevSlide() { goToSlide(currentIndex - 1); }
 
             nextBtn.addEventListener('click', () => {
                 clearInterval(interval);
                 nextSlide();
                 startInterval();
             });
-
             prevBtn.addEventListener('click', () => {
                 clearInterval(interval);
                 prevSlide();
@@ -1132,7 +1161,6 @@
             function startInterval() {
                 interval = setInterval(nextSlide, 3000);
             }
-
             startInterval();
         }
     </script>
