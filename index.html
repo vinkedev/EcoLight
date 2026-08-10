@@ -22,13 +22,13 @@
             --brand: #00A3E0;
             --secondary: #76BC43;
             --accent: #f5a623;
-            --danger: #e74c3c;
             --light: #F8FAFC;
             --gray: #eef2f6;
             --text: #1E293B;
             --text-light: #64748B;
             --shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
             --radius: 16px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -56,7 +56,7 @@
             font-weight: 600;
             padding: 14px 36px;
             border-radius: 40px;
-            transition: all 0.3s ease;
+            transition: all var(--transition);
             border: none;
             cursor: pointer;
             font-size: 1.05rem;
@@ -84,6 +84,7 @@
             top: 0;
             z-index: 100;
             border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            transition: background var(--transition);
         }
         header .container {
             display: flex;
@@ -120,6 +121,20 @@
             color: var(--text);
             transition: color 0.2s;
             font-size: 0.95rem;
+            position: relative;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width var(--transition);
+        }
+        nav a:hover::after {
+            width: 100%;
         }
         nav a:hover {
             color: var(--secondary);
@@ -147,24 +162,10 @@
             display: flex;
             align-items: center;
             padding: 50px 0 70px;
-        }
-        .hero-slideshow {
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            background: #1a1a2e;
-        }
-        .hero-slideshow .slide {
-            position: absolute;
-            inset: 0;
+            background-image: url('EcoLight/acceuil.jpg');
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
-            opacity: 0;
-            transition: opacity 1.2s ease-in-out;
-        }
-        .hero-slideshow .slide.active {
-            opacity: 1;
         }
         .hero-overlay {
             position: absolute;
@@ -187,6 +188,9 @@
             line-height: 1.15;
             color: #fff;
             margin-bottom: 16px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s ease forwards 0.2s;
         }
         .hero-content h1 i {
             color: var(--brand);
@@ -197,6 +201,9 @@
             color: rgba(255, 255, 255, 0.85);
             margin-bottom: 28px;
             max-width: 520px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s ease forwards 0.4s;
         }
         .hero-mobile {
             display: none;
@@ -206,6 +213,16 @@
             flex-wrap: wrap;
             gap: 14px;
             justify-content: flex-start;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s ease forwards 0.6s;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* ===== PROVERBES ===== */
@@ -260,6 +277,17 @@
             margin-bottom: 40px;
         }
 
+        /* ===== FADE-UP ANIMATION (Intersection Observer) ===== */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* ===== SECTION PROBLEME ===== */
         .probleme {
             padding: 70px 0;
@@ -271,12 +299,13 @@
             gap: 30px;
         }
         .problem-card {
-            background: #FFF5F5;
-            border-left: 5px solid var(--danger);
+            background: var(--light);
+            border-left: 5px solid var(--text-light);
             border-radius: var(--radius);
             padding: 32px 28px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all var(--transition);
+            cursor: default;
         }
         .problem-card:hover {
             transform: translateY(-4px);
@@ -284,11 +313,15 @@
         }
         .problem-card h3 {
             font-size: 1.3rem;
-            color: var(--danger);
+            color: var(--text);
             margin-bottom: 16px;
             display: flex;
             align-items: center;
             gap: 12px;
+        }
+        .problem-card h3 i {
+            color: var(--brand);
+            font-size: 1.4rem;
         }
         .problem-card ul {
             list-style: none;
@@ -306,7 +339,7 @@
             margin-bottom: 0;
         }
         .problem-card ul li i {
-            color: var(--danger);
+            color: var(--text-light);
             margin-top: 4px;
             font-size: 1.1rem;
         }
@@ -364,6 +397,10 @@
             margin-bottom: 14px;
             color: var(--text);
             line-height: 1.5;
+            transition: transform var(--transition);
+        }
+        .feature-check-list li:hover {
+            transform: translateX(4px);
         }
         .feature-check-list li i {
             color: var(--secondary);
@@ -371,56 +408,60 @@
             font-size: 1.1rem;
         }
 
-        /* ===== PORTRAIL PARENT (nouveau) ===== */
+        /* ===== PORTRAIT PARENT ===== */
         .portail-parent {
             padding: 70px 0;
             background: #fff;
-            border-top: 1px solid var(--gray);
         }
         .portail-box {
             background: var(--light);
             border-radius: var(--radius);
             padding: 48px;
+            box-shadow: var(--shadow);
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
             align-items: center;
         }
-        .portail-box .portail-text h3 {
-            font-size: 1.8rem;
-            color: var(--text);
-            font-weight: 800;
+        .portail-box .text h3 {
+            font-size: 1.6rem;
+            color: var(--brand);
             margin-bottom: 12px;
-            line-height: 1.25;
+            font-weight: 800;
         }
-        .portail-box .portail-text h3 i {
-            color: var(--secondary);
-        }
-        .portail-box .portail-text p {
+        .portail-box .text p {
             font-size: 1rem;
             color: var(--text-light);
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             line-height: 1.7;
         }
-        .portail-box .portail-text ul {
+        .portail-box .text ul {
             list-style: none;
         }
-        .portail-box .portail-text ul li {
+        .portail-box .text ul li {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 10px;
             font-size: 0.95rem;
             margin-bottom: 10px;
-            font-weight: 500;
+            color: var(--text);
         }
-        .portail-box .portail-text ul li i {
+        .portail-box .text ul li i {
             color: var(--secondary);
-            font-size: 1.1rem;
+            margin-top: 4px;
         }
         .portail-box img {
             width: 100%;
-            border-radius: 12px;
+            max-width: 260px;
+            margin: 0 auto;
+            display: block;
+            border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+        .portail-box img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
         }
 
         /* ===== PILIERS ===== */
@@ -437,11 +478,11 @@
             background: var(--light);
             border-radius: var(--radius);
             padding: 28px 20px;
-            transition: all 0.3s ease;
+            transition: all var(--transition);
             border: 1px solid transparent;
         }
         .card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-6px);
             border-color: var(--secondary);
             box-shadow: var(--shadow);
         }
@@ -450,6 +491,10 @@
             color: var(--secondary);
             margin-bottom: 12px;
             display: block;
+            transition: transform var(--transition);
+        }
+        .card:hover i.main-icon {
+            transform: scale(1.1);
         }
         .card h3 {
             font-size: 1.1rem;
@@ -501,15 +546,20 @@
             border-radius: var(--radius);
             backdrop-filter: blur(4px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: 0.3s;
+            transition: all var(--transition);
         }
         .feature-item:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.18);
+            transform: translateY(-4px);
         }
         .feature-item i {
             font-size: 2.4rem;
             color: var(--secondary);
             margin-bottom: 10px;
+            transition: transform var(--transition);
+        }
+        .feature-item:hover i {
+            transform: scale(1.15);
         }
         .feature-item h4 {
             font-size: 1.1rem;
@@ -536,6 +586,10 @@
             margin-bottom: 14px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
             overflow: hidden;
+            transition: all var(--transition);
+        }
+        .faq-item:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
         }
         .faq-question {
             padding: 16px 22px;
@@ -550,6 +604,10 @@
             width: 100%;
             text-align: left;
             color: var(--text);
+            transition: background var(--transition);
+        }
+        .faq-question:hover {
+            background: #f8fafc;
         }
         .faq-question i {
             transition: 0.3s;
@@ -562,7 +620,7 @@
         .faq-answer {
             max-height: 0;
             overflow: hidden;
-            transition: 0.4s ease;
+            transition: max-height 0.4s ease, padding 0.4s ease;
             padding: 0 22px;
             color: var(--text-light);
             font-size: 0.95rem;
@@ -595,11 +653,12 @@
             align-items: center;
             gap: 10px;
             font-size: 0.95rem;
-            transition: 0.3s;
+            transition: all var(--transition);
         }
         .badge-group .badge:hover {
-            transform: scale(1.03);
+            transform: scale(1.05);
             background: #0088CC;
+            box-shadow: 0 8px 24px rgba(0, 163, 224, 0.3);
         }
         .badge-group .badge i {
             font-size: 1.4rem;
@@ -625,7 +684,7 @@
         }
         footer a {
             color: #94a3b8;
-            transition: 0.2s;
+            transition: color var(--transition);
         }
         footer a:hover {
             color: var(--secondary);
@@ -635,6 +694,12 @@
             gap: 14px;
             margin-top: 10px;
             font-size: 1.3rem;
+        }
+        footer .socials a {
+            transition: transform var(--transition);
+        }
+        footer .socials a:hover {
+            transform: translateY(-2px);
         }
         footer .footer-bottom {
             grid-column: 1 / -1;
@@ -673,17 +738,18 @@
             font-size: 2rem;
             box-shadow: 0 8px 32px rgba(37, 211, 102, 0.4);
             z-index: 999;
-            transition: 0.3s;
-            animation: pulse 2s infinite;
+            transition: all var(--transition);
+            animation: pulse-wa 2s infinite;
         }
         .whatsapp-float:hover {
-            transform: scale(1.08);
+            transform: scale(1.1);
         }
-        @keyframes pulse {
+        @keyframes pulse-wa {
             0%, 100% { box-shadow: 0 8px 32px rgba(37, 211, 102, 0.4); }
             50% { box-shadow: 0 8px 48px rgba(37, 211, 102, 0.7); }
         }
 
+        /* ============================================================ */
         /* ===== RESPONSIVE ===== */
         @media (max-width: 1024px) {
             .grid-4, .grid-4-features {
@@ -722,8 +788,13 @@
             .footer-contact li, .socials, footer .logo {
                 justify-content: center;
             }
-            .portail-box .portail-text ul li {
-                justify-content: center;
+            .portail-box img {
+                max-width: 200px;
+            }
+            .btn-primary {
+                padding: 14px 28px;
+                font-size: 1rem;
+                max-width: 100%;
             }
         }
 
@@ -752,12 +823,21 @@
             }
             .btn-primary {
                 width: 100%;
+                max-width: 320px;
+                margin: 0 auto;
+            }
+            .hero-buttons {
+                justify-content: center;
+                width: 100%;
             }
             .solution-box, .portail-box {
                 padding: 24px;
             }
             .hero-content h1 {
                 font-size: 2rem;
+            }
+            .portail-box img {
+                max-width: 180px;
             }
         }
     </style>
@@ -789,13 +869,7 @@
 
     <!-- ===== HERO ===== -->
     <section class="hero" id="hero">
-        <div class="hero-slideshow" id="heroSlideshow">
-            <div class="slide active" style="background-image: url('EcoLight/acceuil.jpg');"></div>
-            <div class="slide" style="background-image: url('EcoLight/onboarding_communication.png');"></div>
-            <div class="slide" style="background-image: url('EcoLight/onboarding_academic.jpg');"></div>
-        </div>
         <div class="hero-overlay"></div>
-
         <div class="container">
             <div class="hero-content">
                 <h1>L'école et les parents, <br /><i>enfin connectés.</i></h1>
@@ -832,11 +906,11 @@
     <!-- ===== LE PROBLEME ===== -->
     <section class="probleme" id="probleme">
         <div class="container">
-            <h2 class="section-title">Entre l'école et les parents, l'information a du mal à circuler.</h2>
-            <p class="section-sub">Un problème que vivent aussi bien les familles que l'administration.</p>
+            <h2 class="section-title fade-up">Entre l'école et les parents, l'information a du mal à circuler.</h2>
+            <p class="section-sub fade-up">Un problème que vivent aussi bien les familles que l'administration.</p>
 
             <div class="grid-2">
-                <div class="problem-card">
+                <div class="problem-card fade-up">
                     <h3>
                         <i class="fas fa-user-group"></i>
                         Pour les Parents
@@ -846,7 +920,7 @@
                             <i class="fas fa-xmark"></i>
                             <div>
                                 <strong>Informations manquées :</strong>
-                                Les parents ne sont pas  informés à temps des annonces, absences, notes ou événements importants.
+                                Les parents peuvent ne pas être informés à temps des annonces, absences, notes ou événements importants.
                             </div>
                         </li>
                         <li>
@@ -866,7 +940,7 @@
                     </ul>
                 </div>
 
-                <div class="problem-card">
+                <div class="problem-card fade-up">
                     <h3>
                         <i class="fas fa-school"></i>
                         Pour l'Établissement
@@ -902,7 +976,7 @@
     <!-- ===== LA SOLUTION ===== -->
     <section class="solution" id="solution">
         <div class="container">
-            <div class="solution-box">
+            <div class="solution-box fade-up">
                 <div class="solution-text">
                     <div class="solution-badge">
                         <i class="fas fa-bolt"></i>
@@ -910,7 +984,7 @@
                     </div>
 
                     <h3>
-                        Le suivi scolaire et la communication, simplifiés.
+                        Le suivi scolaire et la communication, simplement.
                     </h3>
 
                     <p>
@@ -950,35 +1024,23 @@
         </div>
     </section>
 
-    <!-- ===== PORTRAIL PARENT ===== -->
+    <!-- ===== PORTAIL PARENT ===== -->
     <section class="portail-parent" id="portail-parent">
         <div class="container">
-            <h2 class="section-title">Le Portail Parent</h2>
-            <p class="section-sub">Un espace dédié pour suivre la scolarité de son enfant en toute simplicité.</p>
-
-            <div class="portail-box">
-                <div class="portail-text">
-                    <h3>
-                        <i class="fas fa-users"></i> Connectez-vous à la vie scolaire de votre enfant.
-                    </h3>
+            <div class="portail-box fade-up">
+                <div class="text">
+                    <h3>Portail Parents</h3>
                     <p>
-                        Le portail parent EcoLight vous offre une vue d'ensemble de la scolarité de votre enfant :
-                        notes, absences, emploi du temps, devoirs et communications avec l'école.
+                        L'application mobile qui permet aux parents de suivre la scolarité de leurs enfants en temps réel, où qu'ils soient.
                     </p>
                     <ul>
-                        <li><i class="fas fa-check-circle"></i> Consultez les notes et bulletins en temps réel.</li>
-                        <li><i class="fas fa-check-circle"></i> Soyez alerté en cas d'absence ou de retard.</li>
-                        <li><i class="fas fa-check-circle"></i> Recevez les devoirs et le cahier de texte.</li>
-                        <li><i class="fas fa-check-circle"></i> Échangez avec les enseignants via la messagerie.</li>
-                        <li><i class="fas fa-check-circle"></i> Suivez les paiements et les échéances.</li>
+                        <li><i class="fas fa-circle-check"></i> Consultation des notes, absences et retards</li>
+                        <li><i class="fas fa-circle-check"></i> Réception des annonces et événements</li>
+                        <li><i class="fas fa-circle-check"></i> Suivi des paiements et échéances</li>
+                        <li><i class="fas fa-circle-check"></i> Interface simple et intuitive</li>
                     </ul>
                 </div>
-                <div>
-                    <img
-                        src="EcoLight/parentscreen.png"
-                        alt="Portail Parent EcoLight"
-                    />
-                </div>
+                <img src="EcoLight/parentscreen.png" alt="Aperçu du portail parent EcoLight" />
             </div>
         </div>
     </section>
@@ -986,10 +1048,10 @@
     <!-- ===== LES PORTAILS / PILIERS ===== -->
     <section class="piliers" id="piliers">
         <div class="container">
-            <h2 class="section-title">Démonstration par Portails</h2>
-            <p class="section-sub">Un espace dédié pour chaque acteur de l'établissement.</p>
+            <h2 class="section-title fade-up">Démonstration par Portails</h2>
+            <p class="section-sub fade-up">Un espace dédié pour chaque acteur de l'établissement.</p>
             <div class="grid-4">
-                <div class="card">
+                <div class="card fade-up">
                     <i class="fas fa-building-columns main-icon"></i>
                     <h3>Administration & Direction</h3>
                     <ul>
@@ -998,7 +1060,7 @@
                         <li><i class="fas fa-chevron-right"></i> Tableaux de bord stratégiques et financiers</li>
                     </ul>
                 </div>
-                <div class="card">
+                <div class="card fade-up">
                     <i class="fas fa-chalkboard-user main-icon"></i>
                     <h3>Enseignants</h3>
                     <ul>
@@ -1007,7 +1069,7 @@
                         <li><i class="fas fa-chevron-right"></i> Calcul automatique des moyennes</li>
                     </ul>
                 </div>
-                <div class="card">
+                <div class="card fade-up">
                     <i class="fas fa-users main-icon"></i>
                     <h3>Parents & Familles</h3>
                     <ul>
@@ -1016,7 +1078,7 @@
                         <li><i class="fas fa-chevron-right"></i> Réception des annonces de la direction</li>
                     </ul>
                 </div>
-                <div class="card">
+                <div class="card fade-up">
                     <i class="fas fa-user-graduate main-icon"></i>
                     <h3>Élèves & Étudiants</h3>
                     <ul>
@@ -1032,25 +1094,25 @@
     <!-- ===== POURQUOI ===== -->
     <section class="pourquoi" id="pourquoi">
         <div class="container">
-            <h2 class="section-title">Pourquoi choisir EcoLight ?</h2>
-            <p class="section-sub">Des atouts sur-mesure pour s'adapter à toutes les contraintes de terrain.</p>
+            <h2 class="section-title fade-up">Pourquoi choisir EcoLight ?</h2>
+            <p class="section-sub fade-up">Des atouts sur-mesure pour s'adapter à toutes les contraintes de terrain.</p>
             <div class="grid-4-features">
-                <div class="feature-item">
+                <div class="feature-item fade-up">
                     <i class="fas fa-bolt"></i>
                     <h4>Simple & Rapide</h4>
                     <p>Prise en main immédiate par l'équipe pédagogique.</p>
                 </div>
-                <div class="feature-item">
+                <div class="feature-item fade-up">
                     <i class="fas fa-wifi-slash"></i>
                     <h4>Mode Hors-ligne</h4>
                     <p>Fonctionne parfaitement sans accès internet permanent.</p>
                 </div>
-                <div class="feature-item">
+                <div class="feature-item fade-up">
                     <i class="fas fa-mobile-screen-button"></i>
                     <h4>Multi-plateforme</h4>
                     <p>Compatible Android, Web et PC Windows.</p>
                 </div>
-                <div class="feature-item">
+                <div class="feature-item fade-up">
                     <i class="fas fa-shield-halved"></i>
                     <h4>Données Sécurisées</h4>
                     <p>Chiffrement robuste de vos registres scolaires.</p>
@@ -1062,31 +1124,31 @@
     <!-- ===== FAQ ===== -->
     <section class="faq" id="faq">
         <div class="container">
-            <h2 class="section-title">Questions fréquentes</h2>
-            <p class="section-sub">Tout ce que vous devez savoir avant de démarrer.</p>
+            <h2 class="section-title fade-up">Questions fréquentes</h2>
+            <p class="section-sub fade-up">Tout ce que vous devez savoir avant de démarrer.</p>
             <div class="faq-list">
-                <div class="faq-item active">
+                <div class="faq-item fade-up">
                     <button class="faq-question">
                         Combien coûte EcoLight ?
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">Nous proposons une formule adaptée à la taille de chaque établissement. Contactez-nous pour une estimation sur-mesure ou une démonstration gratuite.</div>
                 </div>
-                <div class="faq-item">
+                <div class="faq-item fade-up">
                     <button class="faq-question">
                         Faut-il une connexion internet permanente ?
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">Non ! EcoLight fonctionne en mode hors-ligne. Vos données sont enregistrées localement puis synchronisées de façon transparente une fois le réseau rétabli.</div>
                 </div>
-                <div class="faq-item">
+                <div class="faq-item fade-up">
                     <button class="faq-question">
                         Les données de l'école sont-elles sécurisées ?
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">Absolument. Nous mettons en œuvre des accès cloisonnés et sécurisés. Seuls les comptes autorisés peuvent accéder aux dossiers de l'école.</div>
                 </div>
-                <div class="faq-item">
+                <div class="faq-item fade-up">
                     <button class="faq-question">
                         Sur quels appareils l'application s'installe-t-elle ?
                         <i class="fas fa-chevron-down"></i>
@@ -1100,8 +1162,8 @@
     <!-- ===== BADGES ===== -->
     <section class="badges">
         <div class="container">
-            <h2 class="section-title" style="font-size:1.8rem;">Retrouvez EcoLight sur tous vos appareils</h2>
-            <div class="badge-group">
+            <h2 class="section-title fade-up" style="font-size:1.8rem;">Retrouvez EcoLight sur tous vos appareils</h2>
+            <div class="badge-group fade-up">
                 <a href="#" class="badge"><i class="fab fa-google-play"></i> Google Play</a>
                 <a href="#" class="badge"><i class="fab fa-apple"></i> App Store</a>
                 <a href="#" class="badge"><i class="fab fa-windows"></i> Windows PC</a>
@@ -1152,14 +1214,14 @@
 
     <!-- SCRIPT JS -->
     <script>
-        // Menu Mobile Toggle
+        // ===== Menu Mobile =====
         const menuToggle = document.getElementById('menuToggle');
         const mainNav = document.getElementById('mainNav');
         menuToggle.addEventListener('click', () => {
             mainNav.classList.toggle('open');
         });
 
-        // FAQ Accordion
+        // ===== FAQ Accordion =====
         const faqQuestions = document.querySelectorAll('.faq-question');
         faqQuestions.forEach(q => {
             q.addEventListener('click', () => {
@@ -1168,14 +1230,37 @@
             });
         });
 
-        // Slideshow Hero
-        const slides = document.querySelectorAll('.hero-slideshow .slide');
-        let currentSlide = 0;
-        setInterval(() => {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }, 5000);
+        // ===== Fade-up on scroll (Intersection Observer) =====
+        const fadeElements = document.querySelectorAll('.fade-up');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // on peut arrêter d'observer pour éviter de re-déclencher
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -30px 0px'
+        });
+
+        fadeElements.forEach(el => observer.observe(el));
+
+        // ===== (Optionnel) Smooth scroll pour les ancres =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const target = document.querySelector(targetId);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
     </script>
+
 </body>
 </html>
