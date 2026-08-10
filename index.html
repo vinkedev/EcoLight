@@ -190,6 +190,40 @@
             z-index: 1;
         }
 
+        /* ===== LOADER DIAPORAMA ===== */
+        .hero-preloader {
+            position: absolute;
+            inset: 0;
+            z-index: 15;
+            background: rgba(0, 0, 0, 0.75);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+            visibility: visible;
+            opacity: 1;
+            backdrop-filter: blur(4px);
+        }
+        .hero-preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .hero-preloader .spinner {
+            width: 56px;
+            height: 56px;
+            border: 6px solid rgba(255, 255, 255, 0.15);
+            border-top-color: var(--brand);
+            border-right-color: var(--secondary);
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         .hero .container {
             position: relative;
             z-index: 2;
@@ -893,6 +927,12 @@
             <div class="hero-slide" style="background-image: url('EcoLight/onboarding_academic.jpg');"></div>
         </div>
         <div class="hero-overlay"></div>
+
+        <!-- LOADER DU DIAPORAMA -->
+        <div class="hero-preloader" id="heroPreloader">
+            <div class="spinner"></div>
+        </div>
+
         <div class="container">
             <div class="hero-content">
                 <h1>L'école et les parents, <br /><i>enfin connectés.</i></h1>
@@ -928,6 +968,7 @@
                     <span class="proverbe-item"><i class="fas fa-quote-left"></i> Une biche ne peut être rapide à la course et son fils être un lourdaud. <i class="fas fa-quote-right"></i> — Proverbe mossi</span>
                     <span class="proverbe-item"><i class="fas fa-quote-left"></i> L'éducation est une arme puissante pour la libération et la transformation sociale. <i class="fas fa-quote-right"></i> — Thomas Sankara</span>
                     <span class="proverbe-item"><i class="fas fa-quote-left"></i> L'éducation est l'arme la plus puissante que l'on puisse utiliser pour changer le monde. <i class="fas fa-quote-right"></i> — Nelson Mandela</span>
+                    <!-- (La duplication via CSS est déjà faite, pas besoin de doubler dans le HTML) -->
                 </div>
             </div>
         </div>
@@ -953,15 +994,15 @@
                 <img src="EcoLight/parentscreen.png" alt="Portail Parents" loading="lazy" />
             </div>
 
-            <!-- 2. Enseignants (corrigé) -->
+            <!-- 2. Enseignants -->
             <div class="portail-row fade-up">
                 <div class="text">
                     <h3><i class="fas fa-chalkboard-user"></i> Enseignants</h3>
                     <ul>
-                        <li><i class="fas fa-circle-check"></i> <strong>Acces a son emploie du temps  depuis son telephone  :</strong> </li>
-                        <li><i class="fas fa-circle-check"></i> <strong>Saisie fluide des notes & appréciations :</strong></li>
-                        <li><i class="fas fa-circle-check"></i> <strong>Gestion des absences en 1 clic :</strong> </li>
-                        <li><i class="fas fa-circle-check"></i> <strong>Mode hors-ligne :</strong></li>
+                        <li><i class="fas fa-circle-check"></i> <strong>Accès à son emploi du temps depuis son téléphone</strong></li>
+                        <li><i class="fas fa-circle-check"></i> <strong>Saisie fluide des notes & appréciations</strong></li>
+                        <li><i class="fas fa-circle-check"></i> <strong>Gestion des absences en 1 clic</strong></li>
+                        <li><i class="fas fa-circle-check"></i> <strong>Mode hors-ligne</strong></li>
                     </ul>
                 </div>
                 <img src="EcoLight/profscreen.png" alt="Portail Enseignants" loading="lazy" />
@@ -1166,16 +1207,65 @@
             });
         });
 
-        // ===== DIAPORAMA =====
+        // ===== PRÉCHARGEMENT DES IMAGES DU DIAPORAMA =====
+        const preloader = document.getElementById('heroPreloader');
         const slides = document.querySelectorAll('.hero-slide');
+        const imageUrls = [];
+
+        // Récupérer toutes les URLs des images de fond
+        slides.forEach(slide => {
+            const bg = slide.style.backgroundImage;
+            if (bg) {
+                const match = bg.match(/url\(["']?([^"')]+)["']?\)/);
+                if (match && match[1]) {
+                    imageUrls.push(match[1]);
+                }
+            }
+        });
+
+        function hidePreloader() {
+            if (preloader) {
+                preloader.classList.add('hidden');
+            }
+        }
+
+        if (imageUrls.length === 0) {
+            hidePreloader();
+        } else {
+            let loadedCount = 0;
+            const totalImages = imageUrls.length;
+
+            imageUrls.forEach(url => {
+                const img = new Image();
+                img.onload = () => {
+                    loadedCount++;
+                    if (loadedCount >= totalImages) {
+                        hidePreloader();
+                    }
+                };
+                img.onerror = () => {
+                    loadedCount++;
+                    if (loadedCount >= totalImages) {
+                        hidePreloader();
+                    }
+                };
+                img.src = url;
+            });
+
+            // Sécurité : au bout de 5 secondes max, on cache le loader
+            setTimeout(hidePreloader, 5000);
+        }
+
+        // ===== DIAPORAMA =====
+        const slidesDiapo = document.querySelectorAll('.hero-slide');
         const dotsContainer = document.getElementById('heroDots');
         const prevBtn = document.getElementById('heroPrev');
         const nextBtn = document.getElementById('heroNext');
         let currentIndex = 0;
         let interval;
 
-        if (slides.length > 0) {
-            slides.forEach((_, i) => {
+        if (slidesDiapo.length > 0) {
+            slidesDiapo.forEach((_, i) => {
                 const dot = document.createElement('span');
                 if (i === 0) dot.classList.add('active');
                 dot.addEventListener('click', () => {
@@ -1187,8 +1277,8 @@
             });
 
             function goToSlide(index) {
-                currentIndex = (index + slides.length) % slides.length;
-                slides.forEach((slide, i) => {
+                currentIndex = (index + slidesDiapo.length) % slidesDiapo.length;
+                slidesDiapo.forEach((slide, i) => {
                     slide.classList.toggle('active', i === currentIndex);
                 });
                 document.querySelectorAll('.hero-dots span').forEach((dot, i) => {
