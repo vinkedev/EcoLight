@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
     <style>
         /* ===== RESET & BASE ===== */
@@ -22,6 +22,7 @@
             --brand: #00A3E0;
             --secondary: #76BC43;
             --accent: #f5a623;
+            --danger: #e74c3c;
             --light: #F8FAFC;
             --gray: #eef2f6;
             --text: #1E293B;
@@ -53,19 +54,24 @@
             background: var(--brand);
             color: #fff;
             font-weight: 600;
-            padding: 12px 28px;
+            padding: 14px 36px;
             border-radius: 40px;
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1.05rem;
             box-shadow: 0 8px 24px rgba(0, 163, 224, 0.3);
             text-align: center;
+            animation: pulse-cta 2.5s infinite;
         }
         .btn-primary:hover {
             background: #0088CC;
-            transform: translateY(-2px);
-            box-shadow: 0 12px 32px rgba(0, 163, 224, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(0, 163, 224, 0.5);
+        }
+        @keyframes pulse-cta {
+            0%, 100% { box-shadow: 0 8px 24px rgba(0, 163, 224, 0.3); }
+            50% { box-shadow: 0 8px 48px rgba(0, 163, 224, 0.6); }
         }
 
         /* ===== HEADER ===== */
@@ -119,8 +125,9 @@
             color: var(--secondary);
         }
         nav .btn-primary {
-            padding: 8px 18px;
+            padding: 8px 20px;
             font-size: 0.85rem;
+            animation: none;
         }
         .menu-toggle {
             display: none;
@@ -136,13 +143,11 @@
         .hero {
             position: relative;
             overflow: hidden;
-            min-height: 100vh;
+            min-height: 85vh;
             display: flex;
             align-items: center;
             padding: 50px 0 70px;
         }
-
-        /* Slideshow */
         .hero-slideshow {
             position: absolute;
             inset: 0;
@@ -161,14 +166,12 @@
         .hero-slideshow .slide.active {
             opacity: 1;
         }
-
         .hero-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.60);
+            background: rgba(0, 0, 0, 0.65);
             z-index: 1;
         }
-
         .hero .container {
             position: relative;
             z-index: 2;
@@ -187,6 +190,7 @@
         }
         .hero-content h1 i {
             color: var(--brand);
+            font-style: normal;
         }
         .hero-content p {
             font-size: 1.1rem;
@@ -194,34 +198,15 @@
             margin-bottom: 28px;
             max-width: 520px;
         }
-
-        /* Version mobile du texte (cachée par défaut) */
         .hero-mobile {
             display: none;
         }
-
         .hero-buttons {
             display: flex;
             flex-wrap: wrap;
             gap: 14px;
-            justify-content: flex-start; /* aligné à gauche sur desktop */
+            justify-content: flex-start;
         }
-
-        /* ===== ANIMATION D'APPARITION ===== */
-        .animate-on-load {
-            opacity: 0;
-            filter: blur(6px);
-            transform: translateY(36px);
-            transition: opacity 0.8s ease-out, filter 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .animate-on-load.visible {
-            opacity: 1;
-            filter: blur(0px);
-            transform: translateY(0);
-        }
-        .animate-on-load:nth-child(1) { transition-delay: 0.1s; }
-        .animate-on-load:nth-child(2) { transition-delay: 0.3s; }
-        .animate-on-load:nth-child(3) { transition-delay: 0.5s; }
 
         /* ===== PROVERBES ===== */
         .proverbes {
@@ -259,23 +244,189 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* ===== PILIERS ===== */
-        .piliers {
-            padding: 60px 0 70px;
-            background: #fff;
-        }
+        /* ===== SECTIONS COMMUNES ===== */
         .section-title {
             text-align: center;
             font-size: 2.2rem;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--text);
             margin-bottom: 12px;
+            line-height: 1.2;
         }
         .section-sub {
             text-align: center;
             color: var(--text-light);
-            font-size: 1rem;
+            font-size: 1.05rem;
             margin-bottom: 40px;
+        }
+
+        /* ===== SECTION PROBLEME ===== */
+        .probleme {
+            padding: 70px 0;
+            background: #fff;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .problem-card {
+            background: #FFF5F5;
+            border-left: 5px solid var(--danger);
+            border-radius: var(--radius);
+            padding: 32px 28px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .problem-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+        .problem-card h3 {
+            font-size: 1.3rem;
+            color: var(--danger);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .problem-card ul {
+            list-style: none;
+        }
+        .problem-card ul li {
+            font-size: 0.95rem;
+            color: var(--text);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            line-height: 1.5;
+        }
+        .problem-card ul li:last-child {
+            margin-bottom: 0;
+        }
+        .problem-card ul li i {
+            color: var(--danger);
+            margin-top: 4px;
+            font-size: 1.1rem;
+        }
+
+        /* ===== SECTION SOLUTION ===== */
+        .solution {
+            padding: 70px 0;
+            background: var(--light);
+            border-top: 1px solid var(--gray);
+        }
+        .solution-box {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 48px;
+            box-shadow: var(--shadow);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        .solution-text h3 {
+            font-size: 1.8rem;
+            color: var(--brand);
+            margin-bottom: 14px;
+            font-weight: 800;
+            line-height: 1.25;
+        }
+        .solution-text p {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+        .solution-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 163, 224, 0.12);
+            color: var(--brand);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+        .feature-check-list {
+            list-style: none;
+        }
+        .feature-check-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            margin-bottom: 14px;
+            color: var(--text);
+            line-height: 1.5;
+        }
+        .feature-check-list li i {
+            color: var(--secondary);
+            margin-top: 3px;
+            font-size: 1.1rem;
+        }
+
+        /* ===== PORTRAIL PARENT (nouveau) ===== */
+        .portail-parent {
+            padding: 70px 0;
+            background: #fff;
+            border-top: 1px solid var(--gray);
+        }
+        .portail-box {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 48px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        .portail-box .portail-text h3 {
+            font-size: 1.8rem;
+            color: var(--text);
+            font-weight: 800;
+            margin-bottom: 12px;
+            line-height: 1.25;
+        }
+        .portail-box .portail-text h3 i {
+            color: var(--secondary);
+        }
+        .portail-box .portail-text p {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        .portail-box .portail-text ul {
+            list-style: none;
+        }
+        .portail-box .portail-text ul li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        .portail-box .portail-text ul li i {
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+        .portail-box img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        /* ===== PILIERS ===== */
+        .piliers {
+            padding: 70px 0;
+            background: #fff;
         }
         .grid-4 {
             display: grid;
@@ -294,10 +445,11 @@
             border-color: var(--secondary);
             box-shadow: var(--shadow);
         }
-        .card i {
+        .card i.main-icon {
             font-size: 2.2rem;
             color: var(--secondary);
             margin-bottom: 12px;
+            display: block;
         }
         .card h3 {
             font-size: 1.1rem;
@@ -320,13 +472,13 @@
         .card ul li i {
             font-size: 0.7rem;
             color: var(--secondary);
-            margin: 0;
+            margin-top: 5px;
             min-width: 16px;
         }
 
         /* ===== POURQUOI ===== */
         .pourquoi {
-            padding: 60px 0 70px;
+            padding: 70px 0;
             background: var(--brand);
             color: #fff;
         }
@@ -371,7 +523,7 @@
 
         /* ===== FAQ ===== */
         .faq {
-            padding: 60px 0 70px;
+            padding: 70px 0;
             background: var(--light);
         }
         .faq-list {
@@ -484,9 +636,6 @@
             margin-top: 10px;
             font-size: 1.3rem;
         }
-        footer .socials a:hover {
-            color: var(--secondary);
-        }
         footer .footer-bottom {
             grid-column: 1 / -1;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -506,10 +655,6 @@
         .footer-contact li i {
             width: 20px;
             color: var(--secondary);
-        }
-        footer h4 {
-            font-size: 1rem;
-            margin-bottom: 10px;
         }
 
         /* ===== WHATSAPP FLOATING ===== */
@@ -540,12 +685,8 @@
         }
 
         /* ===== RESPONSIVE ===== */
-
         @media (max-width: 1024px) {
-            .grid-4 {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .grid-4-features {
+            .grid-4, .grid-4-features {
                 grid-template-columns: repeat(2, 1fr);
             }
             .hero-content h1 {
@@ -554,61 +695,34 @@
         }
 
         @media (max-width: 900px) {
-            .hero .container {
+            .hero .container, .grid-2, .solution-box, .portail-box {
                 grid-template-columns: 1fr;
                 text-align: center;
-                gap: 20px;
+            }
+            .problem-card h3 {
+                justify-content: center;
             }
             .hero-content p {
                 margin-left: auto;
                 margin-right: auto;
-                max-width: 100%;
             }
             .hero-buttons {
-                justify-content: center; /* centré sur mobile */
+                justify-content: center;
             }
-            .hero-content h1 {
-                font-size: 2.2rem;
-            }
-            .hero {
-                min-height: 80vh;
-                padding: 40px 0 50px;
-            }
-
             .hero-desktop {
                 display: none;
             }
             .hero-mobile {
                 display: block;
-                font-size: 1rem;
-                color: rgba(255, 255, 255, 0.85);
-                margin-bottom: 28px;
-            }
-
-            .grid-4 {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 16px;
-            }
-            .grid-4-features {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 16px;
-            }
-            .proverbe-item {
-                font-size: 0.9rem;
-                padding: 0 16px;
             }
             footer .container {
                 grid-template-columns: 1fr;
-                gap: 24px;
                 text-align: center;
             }
-            .footer-contact li {
+            .footer-contact li, .socials, footer .logo {
                 justify-content: center;
             }
-            .socials {
-                justify-content: center;
-            }
-            footer .logo {
+            .portail-box .portail-text ul li {
                 justify-content: center;
             }
         }
@@ -633,130 +747,17 @@
             nav.open {
                 display: flex;
             }
-            nav a {
-                font-size: 1rem;
-            }
-            .logo img {
-                height: 32px;
-            }
-            .logo span {
-                font-size: 1.1rem;
-            }
-            .hero-content h1 {
-                font-size: 1.8rem;
-            }
-            .hero-mobile {
-                font-size: 0.95rem;
-            }
-            .hero {
-                min-height: 70vh;
-                padding: 30px 0 40px;
+            .grid-4, .grid-4-features {
+                grid-template-columns: 1fr;
             }
             .btn-primary {
-                padding: 10px 20px;
-                font-size: 0.9rem;
                 width: 100%;
             }
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-                gap: 12px;
+            .solution-box, .portail-box {
+                padding: 24px;
             }
-            .section-title {
-                font-size: 1.6rem;
-            }
-            .section-sub {
-                font-size: 0.95rem;
-            }
-            .grid-4 {
-                grid-template-columns: 1fr;
-                gap: 14px;
-            }
-            .grid-4-features {
-                grid-template-columns: 1fr;
-                gap: 14px;
-            }
-            .card {
-                padding: 20px 16px;
-            }
-            .card h3 {
-                font-size: 1rem;
-            }
-            .card ul li {
-                font-size: 0.85rem;
-            }
-            .feature-item {
-                padding: 16px;
-            }
-            .feature-item i {
-                font-size: 2rem;
-            }
-            .proverbe-item {
-                font-size: 0.8rem;
-                padding: 0 10px;
-            }
-            .proverbes {
-                padding: 12px 0;
-            }
-            .faq-question {
-                font-size: 0.95rem;
-                padding: 14px 18px;
-            }
-            .faq-answer {
-                font-size: 0.9rem;
-                padding: 0 18px;
-            }
-            .faq-item.active .faq-answer {
-                padding: 0 18px 16px;
-            }
-            .badge-group .badge {
-                padding: 10px 18px;
-                font-size: 0.85rem;
-                gap: 8px;
-            }
-            .badge-group .badge i {
-                font-size: 1.2rem;
-            }
-            footer {
-                padding: 30px 0 16px;
-            }
-            footer .logo img {
-                height: 32px;
-            }
-            footer h4 {
-                font-size: 0.95rem;
-            }
-            .footer-contact li {
-                font-size: 0.9rem;
-            }
-            .whatsapp-float {
-                width: 50px;
-                height: 50px;
-                font-size: 1.8rem;
-                bottom: 16px;
-                right: 16px;
-            }
-            .animate-on-load:nth-child(1) { transition-delay: 0.05s; }
-            .animate-on-load:nth-child(2) { transition-delay: 0.15s; }
-            .animate-on-load:nth-child(3) { transition-delay: 0.25s; }
-        }
-
-        @media (max-width: 400px) {
             .hero-content h1 {
-                font-size: 1.5rem;
-            }
-            .hero-mobile {
-                font-size: 0.9rem;
-            }
-            .section-title {
-                font-size: 1.4rem;
-            }
-            .proverbe-item {
-                font-size: 0.75rem;
-                padding: 0 8px;
-            }
-            .logo span {
-                font-size: 1rem;
+                font-size: 2rem;
             }
         }
     </style>
@@ -774,11 +775,12 @@
                 <i class="fas fa-bars"></i>
             </button>
             <nav id="mainNav">
-                <a href="#piliers">Fonctionnalités</a>
-                <a href="#pourquoi">À propos</a>
+                <a href="#probleme">Problème</a>
+                <a href="#solution">Solution</a>
+                <a href="#portail-parent">Portail Parent</a>
+                <a href="#piliers">Portails</a>
                 <a href="#faq">FAQ</a>
-                <a href="#footer">Contact</a>
-                <a href="https://wa.me/22662932710" class="btn-primary" style="padding:8px 18px;font-size:0.85rem;">
+                <a href="https://wa.me/22662932710" class="btn-primary">
                     <i class="fab fa-whatsapp"></i> Démo
                 </a>
             </nav>
@@ -787,36 +789,26 @@
 
     <!-- ===== HERO ===== -->
     <section class="hero" id="hero">
-        <!-- Slideshow -->
         <div class="hero-slideshow" id="heroSlideshow">
             <div class="slide active" style="background-image: url('EcoLight/acceuil.jpg');"></div>
             <div class="slide" style="background-image: url('EcoLight/onboarding_communication.png');"></div>
             <div class="slide" style="background-image: url('EcoLight/onboarding_academic.jpg');"></div>
         </div>
-        <!-- Overlay -->
         <div class="hero-overlay"></div>
 
         <div class="container">
             <div class="hero-content">
-                <div class="animate-on-load">
-                    <h1>L'école et les parents, <br /><i>enfin connectés.</i></h1>
-                </div>
-                <div class="animate-on-load">
-                    <!-- Version desktop (longue) -->
-                    <p class="hero-desktop">
-                        EcoLight est une plateforme globale de suivi et de communication scolaire conçue pour connecter la direction, l'administration, les enseignants et les familles au sein d'un même écosystème.
-                    </p>
-                    <!-- Version mobile (courte) -->
-                    <p class="hero-mobile">
-                        EcoLight est une plateforme qui connecte parents, administration, direction et enseignants au quotidien.
-                    </p>
-                </div>
-                <div class="animate-on-load">
-                    <div class="hero-buttons">
-                        <a href="https://wa.me/22662932710" class="btn-primary">
-                            <i class="fab fa-whatsapp"></i> Demander une démo
-                        </a>
-                    </div>
+                <h1>L'école et les parents, <br /><i>enfin connectés.</i></h1>
+                <p class="hero-desktop">
+                    Une plateforme globale de suivi et de communication conçue pour connecter la direction, les enseignants et les familles — même hors-ligne.
+                </p>
+                <p class="hero-mobile">
+                    EcoLight est la plateforme qui connecte parents, administration, direction et enseignants au quotidien.
+                </p>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/22662932710" class="btn-primary">
+                        <i class="fab fa-whatsapp"></i> Demander une démo gratuite
+                    </a>
                 </div>
             </div>
         </div>
@@ -830,55 +822,207 @@
                     <span class="proverbe-item"><i class="fas fa-quote-left"></i> L'éducation est une arme puissante pour la libération et la transformation sociale. <i class="fas fa-quote-right"></i> — Thomas Sankara</span>
                     <span class="proverbe-item"><i class="fas fa-quote-left"></i> L'éducation est l'arme la plus puissante que l'on puisse utiliser pour changer le monde. <i class="fas fa-quote-right"></i> — Nelson Mandela</span>
                     <span class="proverbe-item"><i class="fas fa-quote-left"></i> Une biche ne peut être rapide à la course et son fils être un lourdaud. <i class="fas fa-quote-right"></i> — Proverbe mossi</span>
-                    <!-- Duplication -->
                     <span class="proverbe-item"><i class="fas fa-quote-left"></i> L'éducation est une arme puissante pour la libération et la transformation sociale. <i class="fas fa-quote-right"></i> — Thomas Sankara</span>
                     <span class="proverbe-item"><i class="fas fa-quote-left"></i> L'éducation est l'arme la plus puissante que l'on puisse utiliser pour changer le monde. <i class="fas fa-quote-right"></i> — Nelson Mandela</span>
-                    <span class="proverbe-item"><i class="fas fa-quote-left"></i> Une biche ne peut être rapide à la course et son fils être un lourdaud. <i class="fas fa-quote-right"></i> — Proverbe mossi</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== PILIERS ===== -->
+    <!-- ===== LE PROBLEME ===== -->
+    <section class="probleme" id="probleme">
+        <div class="container">
+            <h2 class="section-title">Entre l'école et les parents, l'information a du mal à circuler.</h2>
+            <p class="section-sub">Un problème que vivent aussi bien les familles que l'administration.</p>
+
+            <div class="grid-2">
+                <div class="problem-card">
+                    <h3>
+                        <i class="fas fa-user-group"></i>
+                        Pour les Parents
+                    </h3>
+                    <ul>
+                        <li>
+                            <i class="fas fa-xmark"></i>
+                            <div>
+                                <strong>Informations manquées :</strong>
+                                Les parents peuvent ne pas être informés à temps des annonces, absences, notes ou événements importants.
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-xmark"></i>
+                            <div>
+                                <strong>Suivi difficile :</strong>
+                                Il est difficile de savoir régulièrement comment évolue la scolarité de son enfant.
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-xmark"></i>
+                            <div>
+                                <strong>Communication dispersée :</strong>
+                                Les informations passent par différents canaux et peuvent facilement se perdre.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="problem-card">
+                    <h3>
+                        <i class="fas fa-school"></i>
+                        Pour l'Établissement
+                    </h3>
+                    <ul>
+                        <li>
+                            <i class="fas fa-xmark"></i>
+                            <div>
+                                <strong>Communication chronophage :</strong>
+                                Informer les parents individuellement ou par différents canaux prend du temps.
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-xmark"></i>
+                            <div>
+                                <strong>Informations difficiles à cibler :</strong>
+                                Une annonce ne concerne pas toujours tous les parents, mais il n'est pas toujours simple de sélectionner les bons destinataires.
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-xmark"></i>
+                            <div>
+                                <strong>Trop de tâches manuelles :</strong>
+                                Professeurs et administrateurs consacrent du temps à des tâches qui pourraient être simplifiées.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== LA SOLUTION ===== -->
+    <section class="solution" id="solution">
+        <div class="container">
+            <div class="solution-box">
+                <div class="solution-text">
+                    <div class="solution-badge">
+                        <i class="fas fa-bolt"></i>
+                        La solution EcoLight
+                    </div>
+
+                    <h3>
+                        Le suivi scolaire et la communication, simplement.
+                    </h3>
+
+                    <p>
+                        EcoLight facilite les échanges entre l'établissement, les enseignants
+                        et les parents. Les informations importantes sont transmises rapidement
+                        aux bonnes personnes, tandis que les équipes gagnent du temps au quotidien.
+                    </p>
+
+                    <ul class="feature-check-list">
+                        <li>
+                            <i class="fas fa-circle-check"></i>
+                            <span>Permettez aux parents de recevoir les notes instantanément, avant même que l'élève ne rentre à la maison.</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-circle-check"></i>
+                            <span>Informez rapidement les parents des actualités, retards et événements importants.</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-circle-check"></i>
+                            <span>Envoyez une information ciblée à toute l'école, une classe spécifique ou un groupe de parents.</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-circle-check"></i>
+                            <span>Faites gagner un temps précieux aux enseignants et à l'administration au quotidien.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <img
+                        src="EcoLight/onboarding_communication.png"
+                        alt="Communication et suivi scolaire avec EcoLight"
+                        style="width:100%; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.1);"
+                    />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PORTRAIL PARENT ===== -->
+    <section class="portail-parent" id="portail-parent">
+        <div class="container">
+            <h2 class="section-title">Le Portail Parent</h2>
+            <p class="section-sub">Un espace dédié pour suivre la scolarité de son enfant en toute simplicité.</p>
+
+            <div class="portail-box">
+                <div class="portail-text">
+                    <h3>
+                        <i class="fas fa-users"></i> Connectez-vous à la vie scolaire de votre enfant.
+                    </h3>
+                    <p>
+                        Le portail parent EcoLight vous offre une vue d'ensemble de la scolarité de votre enfant :
+                        notes, absences, emploi du temps, devoirs et communications avec l'école.
+                    </p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Consultez les notes et bulletins en temps réel.</li>
+                        <li><i class="fas fa-check-circle"></i> Soyez alerté en cas d'absence ou de retard.</li>
+                        <li><i class="fas fa-check-circle"></i> Recevez les devoirs et le cahier de texte.</li>
+                        <li><i class="fas fa-check-circle"></i> Échangez avec les enseignants via la messagerie.</li>
+                        <li><i class="fas fa-check-circle"></i> Suivez les paiements et les échéances.</li>
+                    </ul>
+                </div>
+                <div>
+                    <img
+                        src="EcoLight/parentscreen.png"
+                        alt="Portail Parent EcoLight"
+                    />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== LES PORTAILS / PILIERS ===== -->
     <section class="piliers" id="piliers">
         <div class="container">
-            <h2 class="section-title">Les 4 piliers d'EcoLight</h2>
-            <p class="section-sub">Une solution complète pour chaque acteur de la communauté éducative.</p>
+            <h2 class="section-title">Démonstration par Portails</h2>
+            <p class="section-sub">Un espace dédié pour chaque acteur de l'établissement.</p>
             <div class="grid-4">
                 <div class="card">
-                    <i class="fas fa-building-columns"></i>
+                    <i class="fas fa-building-columns main-icon"></i>
                     <h3>Administration & Direction</h3>
                     <ul>
-                        <li><i class="fas fa-chevron-right"></i> Centralisation des élèves, classes et inscriptions</li>
-                        <li><i class="fas fa-chevron-right"></i> Édition rapide des bulletins et relevés</li>
-                        <li><i class="fas fa-chevron-right"></i> Statistiques académiques et sécurité des données</li>
+                        <li><i class="fas fa-chevron-right"></i> Centralisation des effectifs et inscriptions</li>
+                        <li><i class="fas fa-chevron-right"></i> Génération automatique des bulletins et Excel</li>
+                        <li><i class="fas fa-chevron-right"></i> Tableaux de bord stratégiques et financiers</li>
                     </ul>
                 </div>
                 <div class="card">
-                    <i class="fas fa-chalkboard-user"></i>
+                    <i class="fas fa-chalkboard-user main-icon"></i>
                     <h3>Enseignants</h3>
                     <ul>
-                        <li><i class="fas fa-chevron-right"></i> Saisie rapide des notes et appréciations</li>
-                        <li><i class="fas fa-chevron-right"></i> Gestion des présences et retards en temps réel</li>
+                        <li><i class="fas fa-chevron-right"></i> Saisie hors-ligne des notes et devoirs</li>
+                        <li><i class="fas fa-chevron-right"></i> Appel et relevé d'absences en 1 clic</li>
                         <li><i class="fas fa-chevron-right"></i> Calcul automatique des moyennes</li>
                     </ul>
                 </div>
                 <div class="card">
-                    <i class="fas fa-users"></i>
+                    <i class="fas fa-users main-icon"></i>
                     <h3>Parents & Familles</h3>
                     <ul>
-                        <li><i class="fas fa-chevron-right"></i> Consultation instantanée des notes et bulletins</li>
-                        <li><i class="fas fa-chevron-right"></i> Suivi des absences et paiements</li>
-                        <li><i class="fas fa-chevron-right"></i> Réception des annonces officielles</li>
+                        <li><i class="fas fa-chevron-right"></i> Alerte immédiate des notes et retards</li>
+                        <li><i class="fas fa-chevron-right"></i> Suivi de la scolarité et des échéances</li>
+                        <li><i class="fas fa-chevron-right"></i> Réception des annonces de la direction</li>
                     </ul>
                 </div>
                 <div class="card">
-                    <i class="fas fa-user-graduate"></i>
+                    <i class="fas fa-user-graduate main-icon"></i>
                     <h3>Élèves & Étudiants</h3>
                     <ul>
-                        <li><i class="fas fa-chevron-right"></i> Accès à l'emploi du temps et aux devoirs</li>
-                        <li><i class="fas fa-chevron-right"></i> Notification des événements scolaires</li>
-                        <li><i class="fas fa-chevron-right"></i> Consultation des résultats en ligne</li>
+                        <li><i class="fas fa-chevron-right"></i> Emploi du temps mis à jour en temps réel</li>
+                        <li><i class="fas fa-chevron-right"></i> Cahier de texte et devoirs à faire</li>
+                        <li><i class="fas fa-chevron-right"></i> Consultation des notes obtenues</li>
                     </ul>
                 </div>
             </div>
@@ -889,27 +1033,27 @@
     <section class="pourquoi" id="pourquoi">
         <div class="container">
             <h2 class="section-title">Pourquoi choisir EcoLight ?</h2>
-            <p class="section-sub">Des atouts conçus pour les réalités du Burkina Faso et d'ailleurs.</p>
+            <p class="section-sub">Des atouts sur-mesure pour s'adapter à toutes les contraintes de terrain.</p>
             <div class="grid-4-features">
                 <div class="feature-item">
                     <i class="fas fa-bolt"></i>
-                    <h4>Prise en main rapide</h4>
-                    <p>Interface intuitive pour tous, sans formation longue.</p>
+                    <h4>Simple & Rapide</h4>
+                    <p>Prise en main immédiate par l'équipe pédagogique.</p>
                 </div>
                 <div class="feature-item">
                     <i class="fas fa-wifi-slash"></i>
                     <h4>Mode Hors-ligne</h4>
-                    <p>Saisie garantie même sans connexion internet.</p>
+                    <p>Fonctionne parfaitement sans accès internet permanent.</p>
                 </div>
                 <div class="feature-item">
-                    <i class="fas fa-devices"></i>
+                    <i class="fas fa-mobile-screen-button"></i>
                     <h4>Multi-plateforme</h4>
-                    <p>Mobile (Android &amp; iOS), Ordinateur (Windows &amp; Web).</p>
+                    <p>Compatible Android, Web et PC Windows.</p>
                 </div>
                 <div class="feature-item">
                     <i class="fas fa-shield-halved"></i>
-                    <h4>Sécurité des données</h4>
-                    <p>Protection renforcée des dossiers scolaires.</p>
+                    <h4>Données Sécurisées</h4>
+                    <p>Chiffrement robuste de vos registres scolaires.</p>
                 </div>
             </div>
         </div>
@@ -926,28 +1070,28 @@
                         Combien coûte EcoLight ?
                         <i class="fas fa-chevron-down"></i>
                     </button>
-                    <div class="faq-answer">Nous proposons une formule adaptée à chaque établissement. Contactez-nous pour un devis personnalisé. Une version d'essai gratuite est disponible.</div>
+                    <div class="faq-answer">Nous proposons une formule adaptée à la taille de chaque établissement. Contactez-nous pour une estimation sur-mesure ou une démonstration gratuite.</div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question">
                         Faut-il une connexion internet permanente ?
                         <i class="fas fa-chevron-down"></i>
                     </button>
-                    <div class="faq-answer">Non ! EcoLight fonctionne en mode hors-ligne. Les données sont enregistrées localement et se synchronisent automatiquement dès que la connexion revient.</div>
+                    <div class="faq-answer">Non ! EcoLight fonctionne en mode hors-ligne. Vos données sont enregistrées localement puis synchronisées de façon transparente une fois le réseau rétabli.</div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question">
                         Les données de l'école sont-elles sécurisées ?
                         <i class="fas fa-chevron-down"></i>
                     </button>
-                    <div class="faq-answer">Absolument. Nous utilisons un chiffrement de bout en bout et des serveurs sécurisés. Seuls les utilisateurs autorisés ont accès aux informations.</div>
+                    <div class="faq-answer">Absolument. Nous mettons en œuvre des accès cloisonnés et sécurisés. Seuls les comptes autorisés peuvent accéder aux dossiers de l'école.</div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question">
-                        Est-ce accessible sur tous les téléphones ?
+                        Sur quels appareils l'application s'installe-t-elle ?
                         <i class="fas fa-chevron-down"></i>
                     </button>
-                    <div class="faq-answer">Oui, EcoLight est disponible sur Android, iOS, et également sur ordinateur via le web et Windows.</div>
+                    <div class="faq-answer">EcoLight est disponible sur smartphones Android, iOS, ainsi que sur ordinateur via les navigateurs web et Windows.</div>
                 </div>
             </div>
         </div>
@@ -960,7 +1104,7 @@
             <div class="badge-group">
                 <a href="#" class="badge"><i class="fab fa-google-play"></i> Google Play</a>
                 <a href="#" class="badge"><i class="fab fa-apple"></i> App Store</a>
-                <a href="#" class="badge"><i class="fab fa-windows"></i> Windows</a>
+                <a href="#" class="badge"><i class="fab fa-windows"></i> Windows PC</a>
             </div>
         </div>
     </section>
@@ -969,114 +1113,69 @@
     <footer id="footer">
         <div class="container">
             <div>
-                <a href="#" class="logo">
+                <a href="#" class="logo" style="color:#fff;">
                     <img src="EcoLight/logo.png" alt="EcoLight" />
-                    <span>EcoLight</span>
+                    <span style="color:#fff;">EcoLight</span>
                 </a>
-                <p style="margin-top:10px;color:#94a3b8;max-width:320px;font-size:0.95rem;">
-                    Solution de digitalisation du suivi scolaire au Burkina Faso.
+                <p style="margin-top:12px; font-size:0.9rem; color:#94a3b8;">
+                    La plateforme de référence pour connecter la direction, les enseignants, les parents et les élèves.
                 </p>
-                <div class="socials">
-                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                </div>
             </div>
             <div>
-                <h4 style="color:#fff;">Liens</h4>
-                <a href="#piliers" style="display:block;padding:4px 0;">Fonctionnalités</a>
-                <a href="#pourquoi" style="display:block;padding:4px 0;">À propos</a>
-                <a href="#faq" style="display:block;padding:4px 0;">FAQ</a>
+                <h4>Navigation</h4>
+                <ul style="list-style:none;">
+                    <li><a href="#probleme">Problème</a></li>
+                    <li><a href="#solution">Solution</a></li>
+                    <li><a href="#portail-parent">Portail Parent</a></li>
+                    <li><a href="#piliers">Portails</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
             </div>
             <div>
-                <h4 style="color:#fff;">Contact</h4>
+                <h4>Contact</h4>
                 <ul class="footer-contact">
                     <li><i class="fas fa-phone"></i> +226 62 93 27 10</li>
-                    <li><i class="fab fa-whatsapp"></i> +226 65 44 90 33</li>
+                    <li><i class="fas fa-phone"></i> +226 65 44 90 33</li>
                     <li><i class="fas fa-envelope"></i> contact@ecolight.bf</li>
-                    <li><i class="fas fa-location-dot"></i> Ouagadougou, BF</li>
                 </ul>
             </div>
             <div class="footer-bottom">
-                &copy; 2026 EcoLight. Tous droits réservés.
+                <p>&copy; 2026 EcoLight — Tous droits réservés.</p>
             </div>
         </div>
     </footer>
 
-    <!-- ===== WHATSAPP FLOATING ===== -->
-    <a href="https://wa.me/22662932710" class="whatsapp-float" aria-label="WhatsApp">
+    <!-- WHATSAPP FLOATING BUTTON -->
+    <a href="https://wa.me/22662932710" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <!-- ===== JAVASCRIPT ===== -->
+    <!-- SCRIPT JS -->
     <script>
-        // --- Menu mobile ---
-        const toggle = document.getElementById('menuToggle');
-        const nav = document.getElementById('mainNav');
-        toggle.addEventListener('click', () => {
-            nav.classList.toggle('open');
-        });
-        document.querySelectorAll('#mainNav a').forEach(link => {
-            link.addEventListener('click', () => nav.classList.remove('open'));
+        // Menu Mobile Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('open');
         });
 
-        // --- Accordéon FAQ ---
-        document.querySelectorAll('.faq-question').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const parent = this.closest('.faq-item');
-                const wasActive = parent.classList.contains('active');
-                document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('active'));
-                if (!wasActive) {
-                    parent.classList.add('active');
-                }
+        // FAQ Accordion
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(q => {
+            q.addEventListener('click', () => {
+                const item = q.parentElement;
+                item.classList.toggle('active');
             });
         });
 
-        // --- Smooth scroll ---
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                if (href === '#') return;
-                e.preventDefault();
-                const target = document.querySelector(href);
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-
-        // --- Animation d'apparition ---
-        document.addEventListener('DOMContentLoaded', function() {
-            const elements = document.querySelectorAll('.animate-on-load');
-            elements.forEach((el, index) => {
-                setTimeout(() => {
-                    el.classList.add('visible');
-                }, 150 + index * 250);
-            });
-        });
-
-        // --- Slideshow (ordre : acceuil → communication → academic) ---
-        document.addEventListener('DOMContentLoaded', function() {
-            const slides = document.querySelectorAll('.hero-slideshow .slide');
-            let currentIndex = 0;
-
-            if (slides.length === 0) return;
-
-            function showSlide(index) {
-                slides.forEach((slide, i) => {
-                    slide.classList.toggle('active', i === index);
-                });
-            }
-
-            function nextSlide() {
-                currentIndex = (currentIndex + 1) % slides.length;
-                showSlide(currentIndex);
-            }
-
-            showSlide(0);
-            setInterval(nextSlide, 3000);
-        });
+        // Slideshow Hero
+        const slides = document.querySelectorAll('.hero-slideshow .slide');
+        let currentSlide = 0;
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 5000);
     </script>
-
 </body>
 </html>
