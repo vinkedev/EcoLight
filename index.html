@@ -433,6 +433,7 @@
             transition: transform var(--transition), box-shadow var(--transition);
             padding: 8px;
             border: 1px solid var(--gray);
+            cursor: pointer;
         }
         .portail-row img:hover {
             transform: scale(1.02);
@@ -445,6 +446,46 @@
         }
         .portail-row:nth-child(even) img {
             order: 1;
+        }
+
+        /* ===== LIGHTBOX ===== */
+        .lightbox-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 30px;
+            backdrop-filter: blur(4px);
+            cursor: zoom-out;
+        }
+        .lightbox-overlay.open {
+            display: flex;
+        }
+        .lightbox-overlay img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            cursor: default;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+            background: none;
+            border: none;
+        }
+        .lightbox-close:hover {
+            transform: scale(1.2);
         }
 
         /* ===== POURQUOI ===== */
@@ -813,6 +854,11 @@
             .portail-row .text h3 i {
                 font-size: 1.2rem;
             }
+            .lightbox-close {
+                top: 10px;
+                right: 15px;
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
@@ -887,7 +933,7 @@
         </div>
     </section>
 
-    <!-- ===== NOUVELLE SECTION : PORTAILS DÉTAILLÉS (EN LIGNE) ===== -->
+    <!-- ===== PORTAILS DÉTAILLÉS (EN LIGNE) ===== -->
     <section class="portails-details" id="portails">
         <div class="container">
             <h2 class="section-title fade-up">Des portails dédiés pour chaque acteur</h2>
@@ -904,21 +950,21 @@
                         <li><i class="fas fa-circle-check"></i> Interface simple et intuitive</li>
                     </ul>
                 </div>
-                <img src="EcoLight/parentscreen.png" alt="Portail Parents" />
+                <img src="EcoLight/parentscreen.png" alt="Portail Parents" loading="lazy" />
             </div>
 
-            <!-- 2. Enseignants -->
+            <!-- 2. Enseignants (corrigé) -->
             <div class="portail-row fade-up">
                 <div class="text">
                     <h3><i class="fas fa-chalkboard-user"></i> Enseignants</h3>
                     <ul>
-                        <li><i class="fas fa-circle-check"></i> <strong>Acces a son emploie du temps depuis son telephone :</strong> .</li>
-                        <li><i class="fas fa-circle-check"></i> <strong>Saisie fluide des notes & appréciations :</strong> </li>
-                        <li><i class="fas fa-circle-check"></i> <strong>Gestion des absences en 1 clic :</strong> </li>
-                        <li><i class="fas fa-circle-check"></i> <strong>Mode hors-ligne :</strong> li>
+                        <li><i class="fas fa-circle-check"></i> <strong>Consultez du planning :</strong> Emploi du temps mis à jour en temps réel.</li>
+                        <li><i class="fas fa-circle-check"></i> <strong>Saisie fluide des notes & appréciations :</strong> Interface de saisie rapide élève par élève avec tags d'appréciations instantanés (Assez bien, Excellent...) et calcul automatique des moyennes.</li>
+                        <li><i class="fas fa-circle-check"></i> <strong>Gestion des absences en 1 clic :</strong> Option rapide ("Marquer absent") lors des contrôles ou appels en classe.</li>
+                        <li><i class="fas fa-circle-check"></i> <strong>Mode hors-ligne :</strong> Saisie des données sur smartphone/ordinateur même sans connexion internet, avec synchronisation automatique au réseau.</li>
                     </ul>
                 </div>
-                <img src="EcoLight/profscreen.png" alt="Portail Enseignants" />
+                <img src="EcoLight/profscreen.png" alt="Portail Enseignants" loading="lazy" />
             </div>
 
             <!-- 3. Administration -->
@@ -931,7 +977,7 @@
                         <li><i class="fas fa-circle-check"></i> <strong>Suivi comportemental & classes</strong></li>
                     </ul>
                 </div>
-                <img src="EcoLight/adminscreen.png" alt="Portail Administration" />
+                <img src="EcoLight/adminscreen.png" alt="Portail Administration" loading="lazy" />
             </div>
 
             <!-- 4. Direction -->
@@ -944,7 +990,7 @@
                         <li><i class="fas fa-circle-check"></i> <strong>Suivi comportemental des élèves</strong></li>
                     </ul>
                 </div>
-                <img src="EcoLight/directionscreen.png" alt="Portail Direction" />
+                <img src="EcoLight/directionscreen.png" alt="Portail Direction" loading="lazy" />
             </div>
         </div>
     </section>
@@ -1068,6 +1114,12 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
+    <!-- LIGHTBOX (overlay) -->
+    <div class="lightbox-overlay" id="lightboxOverlay">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Fermer">&times;</button>
+        <img id="lightboxImage" src="" alt="Agrandissement" />
+    </div>
+
     <!-- SCRIPT JS -->
     <script>
         // ===== Menu Mobile =====
@@ -1163,6 +1215,34 @@
             }
             startInterval();
         }
+
+        // ===== LIGHTBOX pour les images des portails =====
+        const portailImages = document.querySelectorAll('.portail-row img');
+        const lightboxOverlay = document.getElementById('lightboxOverlay');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxClose = document.getElementById('lightboxClose');
+
+        portailImages.forEach(img => {
+            img.addEventListener('click', () => {
+                lightboxImage.src = img.src;
+                lightboxImage.alt = img.alt + ' (agrandi)';
+                lightboxOverlay.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        function closeLightbox() {
+            lightboxOverlay.classList.remove('open');
+            document.body.style.overflow = 'auto';
+        }
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightboxOverlay.addEventListener('click', (e) => {
+            if (e.target === lightboxOverlay) closeLightbox();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
     </script>
 
 </body>
