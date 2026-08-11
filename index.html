@@ -48,6 +48,48 @@
             padding: 0 20px;
         }
 
+        /* ===== FULL-PAGE PRELOADER ===== */
+        #pagePreloader {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: #0a0a0f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 24px;
+            transition: opacity 0.9s ease, visibility 0.9s ease;
+            visibility: visible;
+            opacity: 1;
+        }
+        #pagePreloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #pagePreloader .spinner {
+            width: 64px;
+            height: 64px;
+            border: 6px solid rgba(255, 255, 255, 0.08);
+            border-top-color: var(--brand);
+            border-right-color: var(--secondary);
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+        }
+        #pagePreloader .loader-text {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
         /* ===== BUTTONS ===== */
         .btn-primary {
             display: inline-block;
@@ -70,8 +112,13 @@
             box-shadow: 0 12px 32px rgba(0, 163, 224, 0.5);
         }
         @keyframes pulse-cta {
-            0%, 100% { box-shadow: 0 8px 24px rgba(0, 163, 224, 0.3); }
-            50% { box-shadow: 0 8px 48px rgba(0, 163, 224, 0.6); }
+            0%,
+            100% {
+                box-shadow: 0 8px 24px rgba(0, 163, 224, 0.3);
+            }
+            50% {
+                box-shadow: 0 8px 48px rgba(0, 163, 224, 0.6);
+            }
         }
 
         /* ===== HEADER ===== */
@@ -154,7 +201,7 @@
             padding: 4px 8px;
         }
 
-        /* ===== HERO DIAPORAMA ===== */
+        /* ===== HERO — FIXED BACKGROUND ===== */
         .hero {
             position: relative;
             overflow: hidden;
@@ -162,66 +209,21 @@
             display: flex;
             align-items: center;
             padding: 50px 0 70px;
-        }
-
-        .hero-slides-wrapper {
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-        }
-        .hero-slide {
-            position: absolute;
-            inset: 0;
+            /* Image de fond fixe */
+            background-image: url('EcoLight/onboarding_academic.jpg');
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
-            opacity: 0;
-            transition: opacity 1.2s ease;
-            will-change: opacity;
-        }
-        .hero-slide.active {
-            opacity: 1;
+            /* Sur desktop, fixe */
+            background-attachment: fixed;
         }
 
+        /* Overlay sombre par-dessus l'image */
         .hero-overlay {
             position: absolute;
             inset: 0;
             background: rgba(0, 0, 0, 0.65);
             z-index: 1;
-        }
-
-        /* ===== LOADER DIAPORAMA ===== */
-        .hero-preloader {
-            position: absolute;
-            inset: 0;
-            z-index: 15;
-            background: rgba(0, 0, 0, 0.75);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
-            visibility: visible;
-            opacity: 1;
-            backdrop-filter: blur(4px);
-        }
-        .hero-preloader.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .hero-preloader .spinner {
-            width: 56px;
-            height: 56px;
-            border: 6px solid rgba(255, 255, 255, 0.15);
-            border-top-color: var(--brand);
-            border-right-color: var(--secondary);
-            border-radius: 50%;
-            animation: spin 0.9s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
         }
 
         .hero .container {
@@ -276,64 +278,6 @@
             }
         }
 
-        .hero-slider-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(6px);
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 10;
-            transition: all 0.3s;
-            font-size: 1.4rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .hero-slider-btn:hover {
-            background: rgba(255, 255, 255, 0.4);
-            transform: translateY(-50%) scale(1.05);
-        }
-        .hero-slider-btn.prev {
-            left: 24px;
-        }
-        .hero-slider-btn.next {
-            right: 24px;
-        }
-
-        .hero-dots {
-            position: absolute;
-            bottom: 30px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            z-index: 10;
-        }
-        .hero-dots span {
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            background: rgba(255, 255, 255, 0.4);
-            border-radius: 50%;
-            margin: 0 7px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-        }
-        .hero-dots span.active {
-            background: var(--brand);
-            border-color: #fff;
-            transform: scale(1.2);
-        }
-        .hero-dots span:hover {
-            background: var(--brand);
-        }
-
         /* ===== PROVERBES ===== */
         .proverbes {
             background: #f8fafc;
@@ -366,8 +310,12 @@
             font-size: 0.8rem;
         }
         @keyframes defilement {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
         }
 
         /* ===== SECTIONS COMMUNES ===== */
@@ -474,7 +422,6 @@
             box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
         }
 
-        /* Alternance : une fois image à droite, une fois à gauche */
         .portail-row:nth-child(even) .text {
             order: 2;
         }
@@ -746,8 +693,13 @@
             transform: scale(1.1);
         }
         @keyframes pulse-wa {
-            0%, 100% { box-shadow: 0 8px 32px rgba(37, 211, 102, 0.4); }
-            50% { box-shadow: 0 8px 48px rgba(37, 211, 102, 0.7); }
+            0%,
+            100% {
+                box-shadow: 0 8px 32px rgba(37, 211, 102, 0.4);
+            }
+            50% {
+                box-shadow: 0 8px 48px rgba(37, 211, 102, 0.7);
+            }
         }
 
         /* ============================================================ */
@@ -783,7 +735,9 @@
                 grid-template-columns: 1fr;
                 text-align: center;
             }
-            .footer-contact li, .socials, footer .logo {
+            .footer-contact li,
+            .socials,
+            footer .logo {
                 justify-content: center;
             }
             .btn-primary {
@@ -791,19 +745,7 @@
                 font-size: 1rem;
                 max-width: 100%;
             }
-            .hero-slider-btn {
-                width: 40px;
-                height: 40px;
-                font-size: 1rem;
-            }
-            .hero-slider-btn.prev {
-                left: 12px;
-            }
-            .hero-slider-btn.next {
-                right: 12px;
-            }
 
-            /* Portails en ligne : passage en 1 colonne */
             .portail-row {
                 grid-template-columns: 1fr;
                 text-align: center;
@@ -864,24 +806,7 @@
             .hero-content h1 {
                 font-size: 1.8rem;
             }
-            .hero-slider-btn {
-                width: 34px;
-                height: 34px;
-                font-size: 0.8rem;
-            }
-            .hero-slider-btn.prev {
-                left: 8px;
-            }
-            .hero-slider-btn.next {
-                right: 8px;
-            }
-            .hero-dots span {
-                width: 10px;
-                height: 10px;
-                margin: 0 4px;
-            }
 
-            /* Titres plus petits sur mobile */
             .portail-row .text h3 {
                 font-size: 1.2rem;
             }
@@ -894,9 +819,37 @@
                 font-size: 2rem;
             }
         }
+
+        /* ===== AJUSTEMENT SPÉCIFIQUE POUR MOBILE : centrage de l'image ===== */
+        @media (max-width: 768px) {
+            .hero {
+                /* On désactive le fixed pour éviter les problèmes de défilement sur mobile */
+                background-attachment: scroll;
+                /* On force le centrage et le redimensionnement */
+                background-size: cover;
+                background-position: center center;
+                /* On peut aussi ajuster la hauteur si besoin */
+                min-height: 70vh;
+                padding: 30px 0 50px;
+            }
+        }
+
+        /* Pour les très petits écrans, on ajuste encore */
+        @media (max-width: 480px) {
+            .hero {
+                min-height: 60vh;
+                padding: 20px 0 40px;
+            }
+        }
     </style>
 </head>
 <body>
+
+    <!-- ===== FULL-PAGE PRELOADER ===== -->
+    <div id="pagePreloader">
+        <div class="spinner"></div>
+        <div class="loader-text">Chargement…</div>
+    </div>
 
     <!-- ===== HEADER ===== -->
     <header>
@@ -919,55 +872,33 @@
         </div>
     </header>
 
-    <!-- ===== HERO DIAPORAMA ===== -->
+    <!-- ===== HERO — FIXED BACKGROUND ===== -->
     <section class="hero" id="hero">
-        <div class="hero-slides-wrapper" id="heroSlidesWrapper">
-            <div class="hero-slide active" style="background-image: url('EcoLight/acceuil.jpg');"></div>
-            <div class="hero-slide" style="background-image: url('EcoLight/onboarding_communication.png');"></div>
-            <div class="hero-slide" style="background-image: url('EcoLight/onboarding_academic.jpg');"></div>
-        </div>
         <div class="hero-overlay"></div>
 
-        <!-- LOADER DU DIAPORAMA -->
-        <div class="hero-preloader" id="heroPreloader">
-            <div class="spinner"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>
+                    L'école et les parents,<br />
+                    <i>enfin connectés.</i>
+                </h1>
+                <p class="hero-desktop">
+                    La plateforme qui permet aux parents de suivre la scolarité de leur enfant
+                    en temps réel depuis leur téléphone, tout en faisant gagner un temps précieux
+                    à l'administration et aux enseignants.
+                </p>
+                <p class="hero-mobile">
+                    Suivez la scolarité de votre enfant en temps réel depuis votre téléphone,
+                    tout en simplifiant le travail de l'école.
+                </p>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/22662932710" class="btn-primary">
+                        <i class="fab fa-whatsapp"></i>
+                        Demander une démo gratuite
+                    </a>
+                </div>
+            </div>
         </div>
-
-       <div class="container">
-    <div class="hero-content">
-        <h1>
-            L'école et les parents,<br />
-            <i>enfin connectés.</i>
-        </h1>
-    <p class="hero-desktop">
-        La plateforme qui permet aux parents de suivre la scolarité de leur enfant
-        en temps réel depuis leur téléphone, tout en faisant gagner un temps précieux
-        à l'administration et aux enseignants.
-    </p>
-
-    <p class="hero-mobile">
-        Suivez la scolarité de votre enfant en temps réel depuis votre téléphone,
-        tout en simplifiant le travail de l'école.
-    </p>
-
-    <div class="hero-buttons">
-        <a href="https://wa.me/22662932710" class="btn-primary">
-            <i class="fab fa-whatsapp"></i>
-            Demander une démo gratuite
-        </a>
-    </div>
-</div>
-
-
-</div>
-
-        <button class="hero-slider-btn prev" id="heroPrev" aria-label="Précédent">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        <button class="hero-slider-btn next" id="heroNext" aria-label="Suivant">
-            <i class="fas fa-chevron-right"></i>
-        </button>
-        <div class="hero-dots" id="heroDots"></div>
     </section>
 
     <!-- ===== PROVERBES (CITATIONS) ===== -->
@@ -980,7 +911,6 @@
                     <span class="proverbe-item"><i class="fas fa-quote-left"></i> Une biche ne peut être rapide à la course et son fils être un lourdaud. <i class="fas fa-quote-right"></i> — Proverbe mossi</span>
                     <span class="proverbe-item"><i class="fas fa-quote-left"></i> L'éducation est une arme puissante pour la libération et la transformation sociale. <i class="fas fa-quote-right"></i> — Thomas Sankara</span>
                     <span class="proverbe-item"><i class="fas fa-quote-left"></i> L'éducation est l'arme la plus puissante que l'on puisse utiliser pour changer le monde. <i class="fas fa-quote-right"></i> — Nelson Mandela</span>
-                    <!-- (La duplication via CSS est déjà faite, pas besoin de doubler dans le HTML) -->
                 </div>
             </div>
         </div>
@@ -993,18 +923,19 @@
             <p class="section-sub fade-up">Une expérience sur-mesure pour les parents, les enseignants, l'administration et la direction.</p>
 
             <!-- 1. Parents -->
-<div class="portail-row fade-up">
-    <div class="text">
-        <h3><i class="fas fa-users"></i> Portail Parents</h3>
-        <ul>
-           <li><i class="fas fa-circle-check"></i> <strong>Notes, absences et retards notifiés en temps réel</strong></li>
-<li><i class="fas fa-circle-check"></i> <strong>Réception des annonces importantes de l'école</strong></li>
-<li><i class="fas fa-circle-check"></i> <strong>Accès à l'emploi du temps de l'enfant</strong></li>
-<li><i class="fas fa-circle-check"></i> <strong>Messagerie directe avec l'établissement</strong></li>
-        </ul>
-    </div>
-    <img src="EcoLight/parentscreen.png" alt="Portail Parents" loading="lazy" />
-</div>
+            <div class="portail-row fade-up">
+                <div class="text">
+                    <h3><i class="fas fa-users"></i> Portail Parents</h3>
+                    <ul>
+                        <li><i class="fas fa-circle-check"></i> <strong>Notes, absences et retards notifiés en temps réel</strong></li>
+                        <li><i class="fas fa-circle-check"></i> <strong>Réception des annonces importantes de l'école</strong></li>
+                        <li><i class="fas fa-circle-check"></i> <strong>Accès à l'emploi du temps de l'enfant</strong></li>
+                        <li><i class="fas fa-circle-check"></i> <strong>Messagerie directe avec l'établissement</strong></li>
+                    </ul>
+                </div>
+                <img src="EcoLight/parentscreen.png" alt="Portail Parents" loading="lazy" />
+            </div>
+
             <!-- 2. Enseignants -->
             <div class="portail-row fade-up">
                 <div class="text">
@@ -1012,11 +943,10 @@
                     <ul>
                         <li><i class="fas fa-circle-check"></i> <strong>Accès à son emploi du temps depuis son téléphone</strong></li>
                         <li>
-    <i class="fas fa-circle-check"></i>
-    <strong>Saisie fluide des notes & appréciations</strong>
-    <span>Dès la saisie, l'administration reçoit les notes au format Excel et chaque parent reçoit automatiquement les résultats de son enfant.</span>
-</li>
-
+                            <i class="fas fa-circle-check"></i>
+                            <strong>Saisie fluide des notes & appréciations</strong>
+                            <span>Dès la saisie, l'administration reçoit les notes au format Excel et chaque parent reçoit automatiquement les résultats de son enfant.</span>
+                        </li>
                         <li><i class="fas fa-circle-check"></i> <strong>Gestion des absences en 1 clic</strong></li>
                         <li><i class="fas fa-circle-check"></i> <strong>Mode hors-ligne</strong></li>
                     </ul>
@@ -1030,20 +960,17 @@
                     <h3><i class="fas fa-building"></i> Administration</h3>
                     <ul>
                         <li>
-    <i class="fas fa-circle-check"></i>
-    <strong>Notes prêtes à l'emploi dès la saisie des profs , sans ressaisie</strong>
-</li>
-
-<li>
-    <i class="fas fa-circle-check"></i>
-    <strong>Absences accessibles en quelques clics</strong>
-</li>
-
-<li>
-    <i class="fas fa-circle-check"></i>
-    <strong>Informations transmises aux bons parents en un clic </strong>
-</li>
-
+                            <i class="fas fa-circle-check"></i>
+                            <strong>Notes prêtes à l'emploi dès la saisie des profs, sans ressaisie</strong>
+                        </li>
+                        <li>
+                            <i class="fas fa-circle-check"></i>
+                            <strong>Absences accessibles en quelques clics</strong>
+                        </li>
+                        <li>
+                            <i class="fas fa-circle-check"></i>
+                            <strong>Informations transmises aux bons parents en un clic</strong>
+                        </li>
                     </ul>
                 </div>
                 <img src="EcoLight/adminscreen.png" alt="Portail Administration" loading="lazy" />
@@ -1054,9 +981,9 @@
                 <div class="text">
                     <h3><i class="fas fa-flag"></i> Direction</h3>
                     <ul>
-                         <li><i class="fas fa-circle-check"></i> <strong>Rapport en temps réel des abscences sur toute l'etablissement </strong></li>
+                        <li><i class="fas fa-circle-check"></i> <strong>Rapport en temps réel des absences sur toute l'établissement</strong></li>
                         <li><i class="fas fa-circle-check"></i> <strong>Annonces ciblées aux parents</strong></li>
-                        <li><i class="fas fa-circle-check"></i> <strong>Consutation des notes saisie par les profs </strong></li>
+                        <li><i class="fas fa-circle-check"></i> <strong>Consultation des notes saisies par les profs</strong></li>
                         <li><i class="fas fa-circle-check"></i> <strong>Suivi comportemental des élèves</strong></li>
                     </ul>
                 </div>
@@ -1067,52 +994,49 @@
 
     <!-- ===== POURQUOI ===== -->
     <section class="pourquoi" id="pourquoi">
-    <div class="container">
-        <h2 class="section-title fade-up">Pourquoi choisir EcoLight ?</h2>
-        <p class="section-sub fade-up">
-            Une solution simple, fiable et pensée pour les réalités des établissements scolaires.
-        </p>
-
-```
-    <div class="grid-4-features">
-
-        <div class="feature-item fade-up">
-            <i class="fas fa-bolt"></i>
-            <h4>Simple & Rapide</h4>
-            <p>
-                Une prise en main rapide pour les enseignants, l'administration et les parents.
+        <div class="container">
+            <h2 class="section-title fade-up">Pourquoi choisir EcoLight ?</h2>
+            <p class="section-sub fade-up">
+                Une solution simple, fiable et pensée pour les réalités des établissements scolaires.
             </p>
+
+            <div class="grid-4-features">
+
+                <div class="feature-item fade-up">
+                    <i class="fas fa-bolt"></i>
+                    <h4>Simple & Rapide</h4>
+                    <p>
+                        Une prise en main rapide pour les enseignants, l'administration et les parents.
+                    </p>
+                </div>
+
+                <div class="feature-item fade-up">
+                    <i class="fas fa-mobile-screen-button"></i>
+                    <h4>Partout, sur tous vos appareils</h4>
+                    <p>
+                        Android, iOS, Web et PC Windows pour rester connecté où que vous soyez.
+                    </p>
+                </div>
+
+                <div class="feature-item fade-up">
+                    <i class="fas fa-shield-halved"></i>
+                    <h4>Sécurité & Confidentialité</h4>
+                    <p>
+                        Données chiffrées et accès strictement limités aux personnes autorisées selon leur rôle.
+                    </p>
+                </div>
+
+                <div class="feature-item fade-up">
+                    <i class="fas fa-user-lock"></i>
+                    <h4>Accès contrôlés</h4>
+                    <p>
+                        Chaque utilisateur accède uniquement aux informations correspondant à son rôle.
+                    </p>
+                </div>
+
+            </div>
         </div>
-
-        <div class="feature-item fade-up">
-            <i class="fas fa-mobile-screen-button"></i>
-            <h4>Partout, sur tous vos appareils</h4>
-            <p>
-                Android, iOS, Web et PC Windows pour rester connecté où que vous soyez.
-            </p>
-        </div>
-
-        <div class="feature-item fade-up">
-    <i class="fas fa-shield-halved"></i>
-    <h4>Sécurité & Confidentialité</h4>
-    <p>
-        Données chiffrées et accès strictement limités aux personnes autorisées selon leur rôle.
-    </p>
-</div>
-
-        <div class="feature-item fade-up">
-            <i class="fas fa-user-lock"></i>
-            <h4>Accès contrôlés</h4>
-            <p>
-                Chaque utilisateur accède uniquement aux informations correspondant à son rôle.
-            </p>
-        </div>
-
-    </div>
-</div>
-```
-
-</section>
+    </section>
 
     <!-- ===== FAQ ===== -->
     <section class="faq" id="faq">
@@ -1211,6 +1135,53 @@
 
     <!-- SCRIPT JS -->
     <script>
+        // ============================================================
+        // 1. PRELOADER — charge l'image avant d'afficher le site
+        // ============================================================
+        (function preloader() {
+            const preloader = document.getElementById('pagePreloader');
+            const hero = document.getElementById('hero');
+            const bgImageUrl = 'EcoLight/onboarding_academic.jpg';
+
+            function hidePreloader() {
+                if (preloader) {
+                    preloader.classList.add('hidden');
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                    }, 1000);
+                }
+            }
+
+            const img = new Image();
+            let imageLoaded = false;
+
+            img.onload = function() {
+                imageLoaded = true;
+                hero.style.backgroundImage = 'url("' + bgImageUrl + '")';
+                hidePreloader();
+            };
+
+            img.onerror = function() {
+                console.warn('⚠️ L\'image de fond n\'a pas pu être chargée, affichage du site quand même.');
+                hero.style.background = '#1a1a2e';
+                hidePreloader();
+            };
+
+            img.src = bgImageUrl;
+
+            // Sécurité : si l'image met trop de temps (> 5s), on force l'affichage
+            setTimeout(function() {
+                if (!imageLoaded) {
+                    if (img.complete && img.naturalWidth > 0) {
+                        hero.style.backgroundImage = 'url("' + bgImageUrl + '")';
+                    } else {
+                        hero.style.background = '#1a1a2e';
+                    }
+                    hidePreloader();
+                }
+            }, 5000);
+        })();
+
         // ===== Menu Mobile =====
         const menuToggle = document.getElementById('menuToggle');
         const mainNav = document.getElementById('mainNav');
@@ -1254,105 +1225,6 @@
                 }
             });
         });
-
-        // ===== PRÉCHARGEMENT DES IMAGES DU DIAPORAMA =====
-        const preloader = document.getElementById('heroPreloader');
-        const slides = document.querySelectorAll('.hero-slide');
-        const imageUrls = [];
-
-        // Récupérer toutes les URLs des images de fond
-        slides.forEach(slide => {
-            const bg = slide.style.backgroundImage;
-            if (bg) {
-                const match = bg.match(/url\(["']?([^"')]+)["']?\)/);
-                if (match && match[1]) {
-                    imageUrls.push(match[1]);
-                }
-            }
-        });
-
-        function hidePreloader() {
-            if (preloader) {
-                preloader.classList.add('hidden');
-            }
-        }
-
-        if (imageUrls.length === 0) {
-            hidePreloader();
-        } else {
-            let loadedCount = 0;
-            const totalImages = imageUrls.length;
-
-            imageUrls.forEach(url => {
-                const img = new Image();
-                img.onload = () => {
-                    loadedCount++;
-                    if (loadedCount >= totalImages) {
-                        hidePreloader();
-                    }
-                };
-                img.onerror = () => {
-                    loadedCount++;
-                    if (loadedCount >= totalImages) {
-                        hidePreloader();
-                    }
-                };
-                img.src = url;
-            });
-
-            // Sécurité : au bout de 5 secondes max, on cache le loader
-            setTimeout(hidePreloader, 5000);
-        }
-
-        // ===== DIAPORAMA =====
-        const slidesDiapo = document.querySelectorAll('.hero-slide');
-        const dotsContainer = document.getElementById('heroDots');
-        const prevBtn = document.getElementById('heroPrev');
-        const nextBtn = document.getElementById('heroNext');
-        let currentIndex = 0;
-        let interval;
-
-        if (slidesDiapo.length > 0) {
-            slidesDiapo.forEach((_, i) => {
-                const dot = document.createElement('span');
-                if (i === 0) dot.classList.add('active');
-                dot.addEventListener('click', () => {
-                    clearInterval(interval);
-                    goToSlide(i);
-                    startInterval();
-                });
-                dotsContainer.appendChild(dot);
-            });
-
-            function goToSlide(index) {
-                currentIndex = (index + slidesDiapo.length) % slidesDiapo.length;
-                slidesDiapo.forEach((slide, i) => {
-                    slide.classList.toggle('active', i === currentIndex);
-                });
-                document.querySelectorAll('.hero-dots span').forEach((dot, i) => {
-                    dot.classList.toggle('active', i === currentIndex);
-                });
-            }
-
-            function nextSlide() { goToSlide(currentIndex + 1); }
-            function prevSlide() { goToSlide(currentIndex - 1); }
-
-            nextBtn.addEventListener('click', () => {
-                clearInterval(interval);
-                nextSlide();
-                startInterval();
-            });
-            prevBtn.addEventListener('click', () => {
-                clearInterval(interval);
-                prevSlide();
-                startInterval();
-            });
-
-            function startInterval() {
-                interval = setInterval(nextSlide, 3000);
-            }
-            startInterval();
-        }
 
         // ===== LIGHTBOX pour les images des portails =====
         const portailImages = document.querySelectorAll('.portail-row img');
