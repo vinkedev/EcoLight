@@ -201,7 +201,7 @@
             padding: 4px 8px;
         }
 
-        /* ===== HERO — FIXED BACKGROUND ===== */
+        /* ===== HERO — DIAPORAMA ===== */
         .hero {
             position: relative;
             overflow: hidden;
@@ -209,16 +209,28 @@
             display: flex;
             align-items: center;
             padding: 50px 0 70px;
-            /* Image de fond fixe */
-            background-image: url('EcoLight/onboarding_academic.jpg');
+        }
+
+        /* Conteneur du diaporama (images en fond) */
+        .hero-slideshow {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .hero-slideshow .slide {
+            position: absolute;
+            inset: 0;
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
-            /* Sur desktop, fixe */
-            background-attachment: fixed;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+        .hero-slideshow .slide.active {
+            opacity: 1;
         }
 
-        /* Overlay sombre par-dessus l'image */
         .hero-overlay {
             position: absolute;
             inset: 0;
@@ -820,21 +832,14 @@
             }
         }
 
-        /* ===== AJUSTEMENT SPÉCIFIQUE POUR MOBILE : centrage de l'image ===== */
+        /* ===== AJUSTEMENT SPÉCIFIQUE POUR MOBILE ===== */
         @media (max-width: 768px) {
             .hero {
-                /* On désactive le fixed pour éviter les problèmes de défilement sur mobile */
-                background-attachment: scroll;
-                /* On force le centrage et le redimensionnement */
-                background-size: cover;
-                background-position: center center;
-                /* On peut aussi ajuster la hauteur si besoin */
                 min-height: 70vh;
                 padding: 30px 0 50px;
             }
         }
 
-        /* Pour les très petits écrans, on ajuste encore */
         @media (max-width: 480px) {
             .hero {
                 min-height: 60vh;
@@ -872,8 +877,12 @@
         </div>
     </header>
 
-    <!-- ===== HERO — FIXED BACKGROUND ===== -->
+    <!-- ===== HERO — DIAPORAMA ===== -->
     <section class="hero" id="hero">
+        <!-- Conteneur du diaporama -->
+        <div class="hero-slideshow" id="heroSlideshow">
+            <!-- Les slides seront injectées par JS -->
+        </div>
         <div class="hero-overlay"></div>
 
         <div class="container">
@@ -1136,13 +1145,26 @@
     <!-- SCRIPT JS -->
     <script>
         // ============================================================
-        // 1. PRELOADER — charge l'image avant d'afficher le site
+        // 1. PRELOADER + DIAPORAMA
         // ============================================================
-        (function preloader() {
+        (function() {
             const preloader = document.getElementById('pagePreloader');
-            const hero = document.getElementById('hero');
-            const bgImageUrl = 'EcoLight/onboarding_academic.jpg';
+            const slideshowContainer = document.getElementById('heroSlideshow');
 
+            // ===== ORDRE EXIGÉ PAR L'UTILISATEUR =====
+            // 1. onboarding_academic.jpg
+            // 2. acceuil.jpg
+            // 3. onboarding_communication.png
+            const images = [
+                'EcoLight/onboarding_academic.jpg',
+                'EcoLight/acceuil.jpg',
+                'EcoLight/onboarding_communication.png'
+            ];
+
+            let loadedCount = 0;
+            const totalImages = images.length;
+
+            // Fonction pour cacher le preloader
             function hidePreloader() {
                 if (preloader) {
                     preloader.classList.add('hidden');
@@ -1152,34 +1174,49 @@
                 }
             }
 
-            const img = new Image();
-            let imageLoaded = false;
+            // Créer les slides
+            images.forEach((src, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'slide' + (index === 0 ? ' active' : '');
+                slide.style.backgroundImage = 'url("' + src + '")';
+                slideshowContainer.appendChild(slide);
 
-            img.onload = function() {
-                imageLoaded = true;
-                hero.style.backgroundImage = 'url("' + bgImageUrl + '")';
-                hidePreloader();
-            };
-
-            img.onerror = function() {
-                console.warn('⚠️ L\'image de fond n\'a pas pu être chargée, affichage du site quand même.');
-                hero.style.background = '#1a1a2e';
-                hidePreloader();
-            };
-
-            img.src = bgImageUrl;
-
-            // Sécurité : si l'image met trop de temps (> 5s), on force l'affichage
-            setTimeout(function() {
-                if (!imageLoaded) {
-                    if (img.complete && img.naturalWidth > 0) {
-                        hero.style.backgroundImage = 'url("' + bgImageUrl + '")';
-                    } else {
-                        hero.style.background = '#1a1a2e';
+                // Précharger l'image pour le compteur
+                const img = new Image();
+                img.onload = function() {
+                    loadedCount++;
+                    if (loadedCount === totalImages) {
+                        hidePreloader();
                     }
+                };
+                img.onerror = function() {
+                    loadedCount++;
+                    if (loadedCount === totalImages) {
+                        hidePreloader();
+                    }
+                };
+                img.src = src;
+            });
+
+            // Sécurité : si au bout de 5 secondes tout n'est pas chargé, on affiche quand même
+            setTimeout(function() {
+                if (loadedCount < totalImages) {
                     hidePreloader();
                 }
             }, 5000);
+
+            // ===== DÉMARRAGE DU DIAPORAMA =====
+            let currentIndex = 0;
+            const slides = slideshowContainer.querySelectorAll('.slide');
+
+            function nextSlide() {
+                slides.forEach(s => s.classList.remove('active'));
+                currentIndex = (currentIndex + 1) % slides.length;
+                slides[currentIndex].classList.add('active');
+            }
+
+            // Changement toutes les 3 secondes
+            setInterval(nextSlide, 3000);
         })();
 
         // ===== Menu Mobile =====
