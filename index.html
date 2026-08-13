@@ -475,7 +475,7 @@
         /* ===== POURQUOI — NOUVEAU DESIGN ===== */
         .pourquoi {
             padding: 70px 0;
-            background: #f8fafc; /* fond clair */
+            background: #f8fafc;
         }
         .pourquoi .section-title {
             color: var(--text);
@@ -651,15 +651,6 @@
         footer a:hover {
             color: var(--secondary);
         }
-        footer .socials {
-            display: flex;
-            gap: 14px;
-            margin-top: 10px;
-            font-size: 1.3rem;
-        }
-        footer .socials a:hover {
-            transform: translateY(-2px);
-        }
         footer .footer-bottom {
             grid-column: 1 / -1;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -679,38 +670,6 @@
         .footer-contact li i {
             width: 20px;
             color: var(--secondary);
-        }
-
-        /* ===== WHATSAPP FLOATING ===== */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            background: #25d366;
-            color: #fff;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            box-shadow: 0 8px 32px rgba(37, 211, 102, 0.4);
-            z-index: 999;
-            transition: all var(--transition);
-            animation: pulse-wa 2s infinite;
-        }
-        .whatsapp-float:hover {
-            transform: scale(1.1);
-        }
-        @keyframes pulse-wa {
-            0%,
-            100% {
-                box-shadow: 0 8px 32px rgba(37, 211, 102, 0.4);
-            }
-            50% {
-                box-shadow: 0 8px 48px rgba(37, 211, 102, 0.7);
-            }
         }
 
         /* ===== RESPONSIVE ===== */
@@ -746,7 +705,6 @@
                 text-align: center;
             }
             .footer-contact li,
-            .socials,
             footer .logo {
                 justify-content: center;
             }
@@ -978,7 +936,7 @@
         </div>
     </section>
 
-    <!-- ===== POURQUOI — NOUVEAU CONTENU ET DESIGN ===== -->
+    <!-- ===== POURQUOI ===== -->
     <section class="pourquoi" id="pourquoi">
         <div class="container">
             <h2 class="section-title fade-up">Pourquoi EcoLight transforme votre établissement</h2>
@@ -1092,11 +1050,6 @@
             </div>
         </div>
     </footer>
-
-    <!-- WHATSAPP FLOATING BUTTON -->
-    <a href="https://wa.me/22662932710" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
 
     <!-- LIGHTBOX -->
     <div class="lightbox-overlay" id="lightboxOverlay">
